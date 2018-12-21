@@ -1,5 +1,5 @@
 import * as types from './types';
-import { firebase } from '../config/firebase';
+import { firebase, applicationsRef } from '../config/firebase';
 
 export const signUp = (values, callback) => (dispatch) => {
   dispatch({ type: types.SIGN_UP_ATTEMPT });
@@ -50,5 +50,21 @@ export const signout = () => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: types.SIGN_OUT_FAIL, error });
+    });
+};
+
+export const fetchApplications = uid => (dispatch) => {
+  dispatch({ type: types.FETCH_ATTEMPT });
+  applicationsRef.doc(uid).get()
+    .then((application) => {
+      if (application.exists) {
+        const applicationData = application.data();
+        dispatch({ type: types.FETCH_GUCCI, data: applicationData });
+      } else {
+        dispatch({ type: types.FETCH_FAIL });
+      }
+    })
+    .catch((error) => {
+      dispatch({ type: types.FETCH_FAIL, error });
     });
 };

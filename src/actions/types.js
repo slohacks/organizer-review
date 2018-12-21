@@ -9,3 +9,6 @@ export const SIGN_UP_GUCCI = 'sign_up_gucci';
 export const SIGN_UP_FAIL = 'sign_up_fail';
 export const SIGN_OUT_GUCCI = 'sign_out_gucci';
 export const SIGN_OUT_FAIL = 'sign_out_fail';
+export const FETCH_ATTEMPT = 'fetch_attempt';
+export const FETCH_GUCCI = 'fetch_gucci';
+export const FETCH_FAIL = 'fetch_fail';
