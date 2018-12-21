@@ -11,18 +11,18 @@ import { login } from '../actions/index';
 
 class Login extends Component {
   componentDidMount() {
-    const { history, auth } = this.props;
+    const { auth } = this.props;
 
     if (auth) {
-      history.push('/dashboard');
+      console.log('Logged in!');
     }
   }
 
   componentDidUpdate() {
-    const { history, auth } = this.props;
+    const { auth } = this.props;
 
     if (auth) {
-      history.push('/dashboard');
+      console.log('Logged in!');
     }
   }
 
@@ -51,7 +51,7 @@ class Login extends Component {
                 SLO Hacks
               </span>
               <br />
-              Attendee Application
+              Organizer Review
             </h1>
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
               <Field

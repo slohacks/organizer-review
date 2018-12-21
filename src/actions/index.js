@@ -1,5 +1,5 @@
 import * as types from './types';
-import { firebase, applicationsRef, firestore } from '../config/firebase';
+import { firebase } from '../config/firebase';
 
 export const signUp = (values, callback) => (dispatch) => {
   dispatch({ type: types.SIGN_UP_ATTEMPT });
@@ -20,22 +20,10 @@ export const login = values => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(values.email, values.password)
     .then((userCredential) => {
       const {
-        user: { emailVerified, uid },
+        user: { emailVerified },
       } = userCredential;
       if (emailVerified) {
-        const docRef = firestore.collection('applications').doc(`${uid}`);
-        docRef.get().then((doc) => {
-          if (doc.exists) {
-            dispatch({ type: types.LOGIN_GUCCI, userCredential });
-            dispatch({ type: types.UPDATE_APPLICATION_TRUE });
-          } else {
-            dispatch({ type: types.LOGIN_GUCCI, userCredential });
-            dispatch({ type: types.UPDATE_APPLICATION_FALSE });
-          }
-        }).catch(() => {
-          dispatch({ type: types.LOGIN_GUCCI, userCredential });
-          dispatch({ type: types.UPDATE_APPLICATION_FALSE });
-        });
+        dispatch({ type: types.LOGIN_GUCCI, userCredential });
       } else {
         dispatch({ type: types.LOGIN_FAIL, error: { message: 'Email not verified, please verify your email.' } });
       }
@@ -63,48 +51,4 @@ export const signout = () => (dispatch) => {
     .catch((error) => {
       dispatch({ type: types.SIGN_OUT_FAIL, error });
     });
-};
-
-export function submitResponse(formProps) {
-  return {
-    type: types.SAVE_RESPONSE,
-    payload: formProps,
-  };
-}
-
-export const uploadResume = (user, resume, onChange) => (dispatch) => {
-  dispatch({ type: types.UPLOAD_RESUME_ATTEMPT });
-  const storageRef = firebase.storage().ref().child('resumes').child(`${user.uid}.pdf`);
-
-  try {
-    storageRef.put(resume).then(() => {
-      dispatch({ type: types.UPLOAD_RESUME_GUCCI, resume });
-      onChange(resume.name);
-    }).catch(() => {
-      dispatch({ type: types.UPLOAD_RESUME_FAIL, error: "File submitted isn't of type PDF or is too large." });
-    });
-  } catch (error) {
-    dispatch({ type: types.UPLOAD_RESUME_FAIL });
-  }
-};
-
-export const clearResume = () => {
-  return {
-    type: types.CLEAR_RESUME_ERROR,
-  };
-};
-
-export const submitApp = (user, form) => (dispatch) => {
-  dispatch({ type: types.ATTEMPT_SUBMISSION });
-  const newForm = {
-    ...form,
-    time: firebase.firestore.Timestamp.now(),
-    email: firebase.auth().currentUser.email,
-  };
-  applicationsRef.doc(user.uid).set(newForm).then(() => {
-    dispatch({ type: types.UPDATE_APPLICATION_TRUE });
-    dispatch({ type: types.SUBMISSION_GUCCI });
-  }).catch((error) => {
-    dispatch({ type: types.SUBMISSION_FAIL, error });
-  });
 };
