@@ -6,6 +6,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import ReduxThunk from 'redux-thunk';
 
 import reducers from './reducers';
+import Application from './containers/Application';
 import SignUp from './containers/SignUp';
 import Login from './containers/Login';
 import ForgotPassword from './containers/ForgotPassword';
@@ -27,6 +28,7 @@ ReactDOM.render(
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
+        <Route path="/application/:uid" component={Application} />
         <Route component={NotFound} />
       </Switch>
     </HashRouter>
