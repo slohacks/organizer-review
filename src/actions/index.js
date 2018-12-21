@@ -61,7 +61,10 @@ export const fetchApplications = uid => (dispatch) => {
         const applicationData = application.data();
         dispatch({ type: types.FETCH_GUCCI, data: applicationData });
       } else {
-        dispatch({ type: types.FETCH_FAIL });
+        dispatch({
+          type: types.FETCH_FAIL,
+          error: { message: 'Application does not exist.' },
+        });
       }
     })
     .catch((error) => {
