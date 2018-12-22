@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { fetchApplications } from '../actions/index';
+import './Application.css';
 
 class Application extends Component {
   componentDidMount() {
@@ -18,19 +19,6 @@ class Application extends Component {
 
   render() {
     const { appData, errorMessage, fetching } = this.props;
-
-    const tempCardStyle = {
-      display: 'inline-block',
-      minWidth: 275,
-      marginRight: '1rem',
-      marginBottom: '1rem',
-    };
-
-    const rowStyle = {
-      display: 'flex',
-      flexWrap: 'wrap',
-      alignItems: 'flex-start',
-    };
 
     if (fetching) {
       return (
@@ -46,8 +34,8 @@ class Application extends Component {
           <h1>{appData.name}</h1>
           <section>
             <h2>Personal Info</h2>
-            <div style={rowStyle}>
-              <Card style={tempCardStyle}>
+            <div clasName="rowstyle">
+              <Card className="cardStyle">
                 <CardContent>
                   <h3>Demographics</h3>
                   <p>
@@ -64,7 +52,7 @@ class Application extends Component {
                   </p>
                 </CardContent>
               </Card>
-              <Card style={tempCardStyle}>
+              <Card className="cardStyle">
                 <CardContent>
                   <h3>Travel</h3>
                   <p>
@@ -77,7 +65,7 @@ class Application extends Component {
                   </p>
                 </CardContent>
               </Card>
-              <Card style={tempCardStyle}>
+              <Card className="cardStyle">
                 <CardContent>
                   <h3>Contact</h3>
                   <p>
@@ -90,7 +78,7 @@ class Application extends Component {
                   </p>
                 </CardContent>
               </Card>
-              <Card style={tempCardStyle}>
+              <Card className="cardStyle">
                 <CardContent>
                   <h3>Food</h3>
                   <p>
@@ -106,8 +94,67 @@ class Application extends Component {
             </div>
           </section>
           <h2>Experience</h2>
+          <div className="rowStyle">
+            <Card className="cardStyle">
+              <CardContent>
+                <h3>Resume</h3>
+                <p>
+                  Resume:
+                  {` ${appData.resume}`}
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="cardStyle">
+              <CardContent>
+                <h3>Sites</h3>
+                <p>
+                  GitHub:
+                  {` ${appData.github}`}
+                </p>
+                <p>
+                  LinkedIn:
+                  {` ${appData.linkedin}`}
+                </p>
+                <p>
+                  Personal Website:
+                  {` ${appData.website}`}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
           <h2>Short Answer</h2>
+          <div className="rowStyle">
+            <Card calssName="cardStyle">
+              <CardContent>
+                <h3>Challenge</h3>
+                <p>
+                  Challenge:
+                  {` ${appData.challenge}`}
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="cardStyle">
+              <CardContent>
+                <h3>Project</h3>
+                <p>
+                  Project:
+                  {` ${appData.project}`}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
           <h2>Misc</h2>
+          <div className="rowStyle">
+            <Card className="cardStyle">
+              <CardContent>
+                <h3>Misc</h3>
+                <p>
+                  Anything else:
+                  {` ${appData.misc}`}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       );
     }
