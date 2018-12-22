@@ -4,6 +4,8 @@ import authentication from './auth';
 import signup from './signup';
 import forgotPassword from './forgotPassword';
 import application from './application';
+import applications from './applicants';
+import queryString from './queryString';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -11,6 +13,8 @@ const rootReducer = combineReducers({
   newUser: signup,
   lostPass: forgotPassword,
   app: application,
+  apps: applications,
+  query: queryString,
 });
 
 export default rootReducer;

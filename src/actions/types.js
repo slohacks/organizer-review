@@ -12,3 +12,6 @@ export const SIGN_OUT_FAIL = 'sign_out_fail';
 export const FETCH_ATTEMPT = 'fetch_attempt';
 export const FETCH_GUCCI = 'fetch_gucci';
 export const FETCH_FAIL = 'fetch_fail';
+export const FETCH_APPLICANTS_SUCCESS = 'fetch_applicants_success';
+export const FETCH_APPLICANTS_FAIL = 'fetch_applicants_fail';
+export const UPDATE_QUERY = 'update_query';
