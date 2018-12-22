@@ -176,7 +176,7 @@ class Application extends Component {
             <div className="rowStyle">
               <Card className="cardStyle">
                 <CardContent>
-                  <h3 className="cardTitle">Misc</h3>
+                  <h3 className="cardTitle">Other Comments</h3>
                   <p>
                     {handleUndefinedField(appData.misc)}
                   </p>
