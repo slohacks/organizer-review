@@ -41,7 +41,7 @@ class Application extends Component {
             <div className="rowStyle">
               <Card className="cardStyle">
                 <CardContent>
-                  <h3>Demographics</h3>
+                  <h3 className="cardTitle">Demographics</h3>
                   <List>
                     <ListItem>
                       <ListItemText primary="Graduation Date" secondary={appData.grad_date} />
@@ -57,7 +57,7 @@ class Application extends Component {
               </Card>
               <Card className="cardStyle">
                 <CardContent>
-                  <h3>Travel</h3>
+                  <h3 className="cardTitle">Travel</h3>
                   <List>
                     <ListItem>
                       <ListItemText primary="College" secondary={appData.college} />
@@ -70,7 +70,7 @@ class Application extends Component {
               </Card>
               <Card className="cardStyle">
                 <CardContent>
-                  <h3>Contact</h3>
+                  <h3 className="cardTitle">Contact</h3>
                   <List>
                     <ListItem button component="a" href={`mailto:${appData.email}`}>
                       <ListItemText primary="Email" secondary={appData.email} />
@@ -83,7 +83,7 @@ class Application extends Component {
               </Card>
               <Card className="cardStyle">
                 <CardContent>
-                  <h3>Food</h3>
+                  <h3 className="cardTitle">Food</h3>
                   <List>
                     <ListItem>
                       <ListItemText primary="Diet" secondary={appData.diet} />
@@ -98,7 +98,7 @@ class Application extends Component {
           <div className="rowStyle">
             <Card className="cardStyle">
               <CardContent>
-                <h3>Resume</h3>
+                <h3 className="cardTitle">Resume</h3>
                 <List>
                   <ListItem>
                     <ListItemText primary="Resume" secondary={appData.resume} />
@@ -108,7 +108,7 @@ class Application extends Component {
             </Card>
             <Card className="cardStyle">
               <CardContent>
-                <h3>Sites</h3>
+                <h3 className="cardTitle">Sites</h3>
                 <List>
                   <ListItem button component="a" href={`https://github.com/${appData.github}`}>
                     <ListItemText primary="GitHub" secondary={appData.github} />
@@ -130,7 +130,7 @@ class Application extends Component {
           <div className="rowStyle">
             <Card calssName="cardStyle">
               <CardContent>
-                <h3>Challenge</h3>
+                <h3 className="cardTitle">Challenge</h3>
                 <List>
                   <ListItem>
                     <ListItemText primary="Challenge" secondary={appData.challenge} />
@@ -140,7 +140,7 @@ class Application extends Component {
             </Card>
             <Card className="cardStyle">
               <CardContent>
-                <h3>Project</h3>
+                <h3 className="cardTitle">Project</h3>
                 <List>
                   <ListItem>
                     <ListItemText primary="Project" secondary={appData.project} />
@@ -153,7 +153,7 @@ class Application extends Component {
           <div className="rowStyle">
             <Card className="cardStyle">
               <CardContent>
-                <h3>Misc</h3>
+                <h3 className="cardTitle">Misc</h3>
                 <List>
                   <ListItem>
                     <ListItemText primary="Misc" secondary={appData.misc} />
