@@ -4,8 +4,12 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { fetchApplications } from '../actions/index';
 import './Application.css';
+
 
 class Application extends Component {
   componentDidMount() {
@@ -34,61 +38,58 @@ class Application extends Component {
           <h1>{appData.name}</h1>
           <section>
             <h2>Personal Info</h2>
-            <div clasName="rowstyle">
+            <div className="rowStyle">
               <Card className="cardStyle">
                 <CardContent>
                   <h3>Demographics</h3>
-                  <p>
-                    Graduation Date:
-                    {` ${appData.grad_date}`}
-                  </p>
-                  <p>
-                    Gender:
-                    {` ${appData.gender ? appData.gender : appData.other_gender}`}
-                  </p>
-                  <p>
-                    Ethnicity:
-                    {` ${appData.ethnicity ? appData.ethnicity : appData.other_ethnicity}`}
-                  </p>
+                  <List>
+                    <ListItem>
+                      <ListItemText primary="Graduation Date" secondary={appData.grad_date} />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Gender" secondary={appData.gender ? appData.gender : appData.other_gender} />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Ethnicity" secondary={appData.ethnicity ? appData.ethnicity : appData.other_ethnicity} />
+                    </ListItem>
+                  </List>
                 </CardContent>
               </Card>
               <Card className="cardStyle">
                 <CardContent>
                   <h3>Travel</h3>
-                  <p>
-                    College:
-                    {` ${appData.college}`}
-                  </p>
-                  <p>
-                    City:
-                    {` ${appData.city}`}
-                  </p>
+                  <List>
+                    <ListItem>
+                      <ListItemText primary="College" secondary={appData.college} />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="City" secondary={appData.city} />
+                    </ListItem>
+                  </List>
                 </CardContent>
               </Card>
               <Card className="cardStyle">
                 <CardContent>
                   <h3>Contact</h3>
-                  <p>
-                    Email:
-                    {` ${appData.email}`}
-                  </p>
-                  <p>
-                    Phone:
-                    {` ${appData.phone}`}
-                  </p>
+                  <List>
+                    <ListItem button component="a" href={`mailto:${appData.email}`}>
+                      <ListItemText primary="Email" secondary={appData.email} />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Phone" secondary={appData.phoneNumber} />
+                    </ListItem>
+                  </List>
                 </CardContent>
               </Card>
               <Card className="cardStyle">
                 <CardContent>
                   <h3>Food</h3>
-                  <p>
-                    Diet:
-                    {` ${appData.diet}`}
-                  </p>
-                  <p>
-                    Allergies:
-                    {` ${appData.allergies}`}
-                  </p>
+                  <List>
+                    <ListItem>
+                      <ListItemText primary="Diet" secondary={appData.diet} />
+                    </ListItem>
+                    <ListItemText primary="Allergies" secondary={appData.allergies} />
+                  </List>
                 </CardContent>
               </Card>
             </div>
@@ -98,27 +99,30 @@ class Application extends Component {
             <Card className="cardStyle">
               <CardContent>
                 <h3>Resume</h3>
-                <p>
-                  Resume:
-                  {` ${appData.resume}`}
-                </p>
+                <List>
+                  <ListItem>
+                    <ListItemText primary="Resume" secondary={appData.resume} />
+                  </ListItem>
+                </List>
               </CardContent>
             </Card>
             <Card className="cardStyle">
               <CardContent>
                 <h3>Sites</h3>
-                <p>
-                  GitHub:
-                  {` ${appData.github}`}
-                </p>
-                <p>
-                  LinkedIn:
-                  {` ${appData.linkedin}`}
-                </p>
-                <p>
-                  Personal Website:
-                  {` ${appData.website}`}
-                </p>
+                <List>
+                  <ListItem button component="a" href={`https://github.com/${appData.github}`}>
+                    <ListItemText primary="GitHub" secondary={appData.github} />
+                  </ListItem>
+                  <ListItem button component="a" href={`https://www.linkedin.com/in/${appData.linkedin}`}>
+                    <ListItemText primary="LinkedIn" secondary={appData.linkedin} />
+                  </ListItem>
+                  <ListItem button component="a" href={`https://${appData.website}`}>
+                    <ListItemText primary="Personal Website" secondary={appData.website} />
+                  </ListItem>
+                  <ListItem button component="a" href={appData.other_link}>
+                    <ListItemText primary="Other Link" secondary={appData.other_link} />
+                  </ListItem>
+                </List>
               </CardContent>
             </Card>
           </div>
@@ -127,19 +131,21 @@ class Application extends Component {
             <Card calssName="cardStyle">
               <CardContent>
                 <h3>Challenge</h3>
-                <p>
-                  Challenge:
-                  {` ${appData.challenge}`}
-                </p>
+                <List>
+                  <ListItem>
+                    <ListItemText primary="Challenge" secondary={appData.challenge} />
+                  </ListItem>
+                </List>
               </CardContent>
             </Card>
             <Card className="cardStyle">
               <CardContent>
                 <h3>Project</h3>
-                <p>
-                  Project:
-                  {` ${appData.project}`}
-                </p>
+                <List>
+                  <ListItem>
+                    <ListItemText primary="Project" secondary={appData.project} />
+                  </ListItem>
+                </List>
               </CardContent>
             </Card>
           </div>
@@ -148,10 +154,11 @@ class Application extends Component {
             <Card className="cardStyle">
               <CardContent>
                 <h3>Misc</h3>
-                <p>
-                  Anything else:
-                  {` ${appData.misc}`}
-                </p>
+                <List>
+                  <ListItem>
+                    <ListItemText primary="Misc" secondary={appData.misc} />
+                  </ListItem>
+                </List>
               </CardContent>
             </Card>
           </div>
