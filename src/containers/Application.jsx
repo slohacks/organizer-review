@@ -10,6 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { fetchApplications } from '../actions/index';
 import './Application.css';
 
+const handleUndefinedField = s => (s || 'Not stated');
+const handleUndefinedFieldWithOther = (s, o) => (s || handleUndefinedField(o));
 
 class Application extends Component {
   componentDidMount() {
@@ -44,13 +46,13 @@ class Application extends Component {
                   <h3 className="cardTitle">Demographics</h3>
                   <List>
                     <ListItem>
-                      <ListItemText primary="Graduation Date" secondary={appData.grad_date} />
+                      <ListItemText primary="Graduation Date" secondary={handleUndefinedField(appData.grad_date)} />
                     </ListItem>
                     <ListItem>
-                      <ListItemText primary="Gender" secondary={appData.gender ? appData.gender : appData.other_gender} />
+                      <ListItemText primary="Gender" secondary={handleUndefinedFieldWithOther(appData.gender, appData.other_gender)} />
                     </ListItem>
                     <ListItem>
-                      <ListItemText primary="Ethnicity" secondary={appData.ethnicity ? appData.ethnicity : appData.other_ethnicity} />
+                      <ListItemText primary="Ethnicity" secondary={handleUndefinedFieldWithOther(appData.ethnicity, appData.other_ethnicity)} />
                     </ListItem>
                   </List>
                 </CardContent>
@@ -60,10 +62,10 @@ class Application extends Component {
                   <h3 className="cardTitle">Travel</h3>
                   <List>
                     <ListItem>
-                      <ListItemText primary="College" secondary={appData.college} />
+                      <ListItemText primary="College" secondary={handleUndefinedField(appData.college)} />
                     </ListItem>
                     <ListItem>
-                      <ListItemText primary="City" secondary={appData.city} />
+                      <ListItemText primary="City" secondary={handleUndefinedField(appData.city)} />
                     </ListItem>
                   </List>
                 </CardContent>
@@ -73,14 +75,14 @@ class Application extends Component {
                   <h3 className="cardTitle">Contact</h3>
                   <List>
                     <ListItem button component="a" href={`mailto:${appData.email}`}>
-                      <ListItemText primary="Email" secondary={appData.email} />
+                      <ListItemText primary="Email" secondary={handleUndefinedField(appData.email)} />
                     </ListItem>
                     <ListItem
                       button={appData.phoneNumber !== undefined}
                       component={appData.phoneNumber ? 'a' : 'li'}
                       href={appData.phoneNumber ? `tel:${appData.phoneNumber}` : ''}
                     >
-                      <ListItemText primary="Phone" secondary={appData.phoneNumber ? appData.phoneNumber : 'Undefined'} />
+                      <ListItemText primary="Phone" secondary={handleUndefinedField(appData.phoneNumber)} />
                     </ListItem>
                   </List>
                 </CardContent>
@@ -90,9 +92,9 @@ class Application extends Component {
                   <h3 className="cardTitle">Food</h3>
                   <List>
                     <ListItem>
-                      <ListItemText primary="Diet" secondary={appData.diet} />
+                      <ListItemText primary="Diet" secondary={handleUndefinedField(appData.diet)} />
                     </ListItem>
-                    <ListItemText primary="Allergies" secondary={appData.allergies} />
+                    <ListItemText primary="Allergies" secondary={handleUndefinedField(appData.allergies)} />
                   </List>
                 </CardContent>
               </Card>
@@ -105,7 +107,7 @@ class Application extends Component {
                 <h3 className="cardTitle">Resume</h3>
                 <List>
                   <ListItem>
-                    <ListItemText primary="Resume" secondary={appData.resume} />
+                    <ListItemText primary="Resume" secondary={handleUndefinedField(appData.resume)} />
                   </ListItem>
                 </List>
               </CardContent>
@@ -115,16 +117,16 @@ class Application extends Component {
                 <h3 className="cardTitle">Sites</h3>
                 <List>
                   <ListItem button component="a" href={`https://github.com/${appData.github}`}>
-                    <ListItemText primary="GitHub" secondary={appData.github} />
+                    <ListItemText primary="GitHub" secondary={handleUndefinedField(appData.github)} />
                   </ListItem>
                   <ListItem button component="a" href={`https://www.linkedin.com/in/${appData.linkedin}`}>
-                    <ListItemText primary="LinkedIn" secondary={appData.linkedin} />
+                    <ListItemText primary="LinkedIn" secondary={handleUndefinedField(appData.linkedin)} />
                   </ListItem>
                   <ListItem button component="a" href={`https://${appData.website}`}>
-                    <ListItemText primary="Personal Website" secondary={appData.website} />
+                    <ListItemText primary="Personal Website" secondary={handleUndefinedField(appData.website)} />
                   </ListItem>
                   <ListItem button component="a" href={appData.other_link}>
-                    <ListItemText primary="Other Link" secondary={appData.other_link} />
+                    <ListItemText primary="Other Link" secondary={handleUndefinedField(appData.other_link)} />
                   </ListItem>
                 </List>
               </CardContent>
@@ -137,7 +139,7 @@ class Application extends Component {
                 <h3 className="cardTitle">Challenge</h3>
                 <List>
                   <ListItem>
-                    <ListItemText primary="Challenge" secondary={appData.challenge} />
+                    <ListItemText primary="Challenge" secondary={handleUndefinedField(appData.challenge)} />
                   </ListItem>
                 </List>
               </CardContent>
@@ -147,7 +149,7 @@ class Application extends Component {
                 <h3 className="cardTitle">Project</h3>
                 <List>
                   <ListItem>
-                    <ListItemText primary="Project" secondary={appData.project} />
+                    <ListItemText primary="Project" secondary={handleUndefinedField(appData.project)} />
                   </ListItem>
                 </List>
               </CardContent>
@@ -160,7 +162,7 @@ class Application extends Component {
                 <h3 className="cardTitle">Misc</h3>
                 <List>
                   <ListItem>
-                    <ListItemText primary="Misc" secondary={appData.misc} />
+                    <ListItemText primary="Misc" secondary={handleUndefinedField(appData.misc)} />
                   </ListItem>
                 </List>
               </CardContent>
