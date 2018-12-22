@@ -132,7 +132,7 @@ class Application extends Component {
           </div>
           <h2>Short Answer</h2>
           <div className="rowStyle">
-            <Card calssName="cardStyle">
+            <Card className="cardStyle">
               <CardContent>
                 <h3 className="cardTitle">Challenge</h3>
                 <List>
