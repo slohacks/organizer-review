@@ -100,90 +100,96 @@ class Application extends Component {
               </Card>
             </div>
           </section>
-          <h2>Experience</h2>
-          <div className="rowStyle">
-            <Card className="cardStyle">
-              <CardContent>
-                <h3 className="cardTitle">Resume</h3>
-                <List>
-                  <ListItem>
-                    <ListItemText primary="Resume" secondary={handleUndefinedField(appData.resume)} />
-                  </ListItem>
-                </List>
-              </CardContent>
-            </Card>
-            <Card className="cardStyle">
-              <CardContent>
-                <h3 className="cardTitle">Sites</h3>
-                <List>
-                  <ListItem
-                    button={appData.github !== undefined}
-                    component={appData.github ? 'a' : 'li'}
-                    href={appData.github ? `https://github.com/${appData.github}` : ''}
-                  >
-                    <ListItemText primary="GitHub" secondary={handleUndefinedField(appData.github)} />
-                  </ListItem>
-                  <ListItem
-                    button={appData.linkedin !== undefined}
-                    component={appData.linkedin ? 'a' : 'li'}
-                    href={appData.linkedin ? `https://www.linkedin.com/in/${appData.linkedin}` : ''}
-                  >
-                    <ListItemText primary="LinkedIn" secondary={handleUndefinedField(appData.linkedin)} />
-                  </ListItem>
-                  <ListItem
-                    button={appData.website !== undefined}
-                    component={appData.website ? 'a' : 'li'}
-                    href={appData.website ? `${appData.website}` : ''}
-                  >
-                    <ListItemText primary="Personal Website" secondary={handleUndefinedField(appData.website)} />
-                  </ListItem>
-                  <ListItem
-                    button={appData.other_link !== undefined}
-                    component={appData.other_link ? 'a' : 'li'}
-                    href={appData.other_link ? `${appData.other_link}` : ''}
-                  >
-                    <ListItemText primary="Other Link" secondary={handleUndefinedField(appData.other_link)} />
-                  </ListItem>
-                </List>
-              </CardContent>
-            </Card>
-          </div>
-          <h2>Short Answer</h2>
-          <div className="rowStyle">
-            <Card className="cardStyle">
-              <CardContent>
-                <h3 className="cardTitle">Challenge</h3>
-                <List>
-                  <ListItem>
-                    <ListItemText primary="Challenge" secondary={handleUndefinedField(appData.challenge)} />
-                  </ListItem>
-                </List>
-              </CardContent>
-            </Card>
-            <Card className="cardStyle">
-              <CardContent>
-                <h3 className="cardTitle">Project</h3>
-                <List>
-                  <ListItem>
-                    <ListItemText primary="Project" secondary={handleUndefinedField(appData.project)} />
-                  </ListItem>
-                </List>
-              </CardContent>
-            </Card>
-          </div>
-          <h2>Misc</h2>
-          <div className="rowStyle">
-            <Card className="cardStyle">
-              <CardContent>
-                <h3 className="cardTitle">Misc</h3>
-                <List>
-                  <ListItem>
-                    <ListItemText primary="Misc" secondary={handleUndefinedField(appData.misc)} />
-                  </ListItem>
-                </List>
-              </CardContent>
-            </Card>
-          </div>
+          <section>
+            <h2>Experience</h2>
+            <div className="rowStyle">
+              <Card className="cardStyle">
+                <CardContent>
+                  <h3 className="cardTitle">Resume</h3>
+                  <List>
+                    <ListItem>
+                      <ListItemText primary="Resume" secondary={handleUndefinedField(appData.resume)} />
+                    </ListItem>
+                  </List>
+                </CardContent>
+              </Card>
+              <Card className="cardStyle">
+                <CardContent>
+                  <h3 className="cardTitle">Sites</h3>
+                  <List>
+                    <ListItem
+                      button={appData.github !== undefined}
+                      component={appData.github ? 'a' : 'li'}
+                      href={appData.github ? `https://github.com/${appData.github}` : ''}
+                    >
+                      <ListItemText primary="GitHub" secondary={handleUndefinedField(appData.github)} />
+                    </ListItem>
+                    <ListItem
+                      button={appData.linkedin !== undefined}
+                      component={appData.linkedin ? 'a' : 'li'}
+                      href={appData.linkedin ? `https://www.linkedin.com/in/${appData.linkedin}` : ''}
+                    >
+                      <ListItemText primary="LinkedIn" secondary={handleUndefinedField(appData.linkedin)} />
+                    </ListItem>
+                    <ListItem
+                      button={appData.website !== undefined}
+                      component={appData.website ? 'a' : 'li'}
+                      href={appData.website ? `${appData.website}` : ''}
+                    >
+                      <ListItemText primary="Personal Website" secondary={handleUndefinedField(appData.website)} />
+                    </ListItem>
+                    <ListItem
+                      button={appData.other_link !== undefined}
+                      component={appData.other_link ? 'a' : 'li'}
+                      href={appData.other_link ? `${appData.other_link}` : ''}
+                    >
+                      <ListItemText primary="Other Link" secondary={handleUndefinedField(appData.other_link)} />
+                    </ListItem>
+                  </List>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+          <section>
+            <h2>Short Answer</h2>
+            <div className="rowStyle">
+              <Card className="cardStyle">
+                <CardContent>
+                  <h3 className="cardTitle">Challenge</h3>
+                  <List>
+                    <ListItem>
+                      <ListItemText primary="Challenge" secondary={handleUndefinedField(appData.challenge)} />
+                    </ListItem>
+                  </List>
+                </CardContent>
+              </Card>
+              <Card className="cardStyle">
+                <CardContent>
+                  <h3 className="cardTitle">Project</h3>
+                  <List>
+                    <ListItem>
+                      <ListItemText primary="Project" secondary={handleUndefinedField(appData.project)} />
+                    </ListItem>
+                  </List>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+          <section>
+            <h2>Misc</h2>
+            <div className="rowStyle">
+              <Card className="cardStyle">
+                <CardContent>
+                  <h3 className="cardTitle">Misc</h3>
+                  <List>
+                    <ListItem>
+                      <ListItemText primary="Misc" secondary={handleUndefinedField(appData.misc)} />
+                    </ListItem>
+                  </List>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
         </div>
       );
     }
