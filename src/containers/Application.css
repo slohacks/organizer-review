@@ -1,0 +1,11 @@
+.cardStyle {
+    display: inline-block;
+    min-width: 275;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+.rowStyle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
