@@ -156,21 +156,17 @@ class Application extends Component {
               <Card className="cardStyle">
                 <CardContent>
                   <h3 className="cardTitle">Challenge</h3>
-                  <List>
-                    <ListItem>
-                      <ListItemText primary="Challenge" secondary={handleUndefinedField(appData.challenge)} />
-                    </ListItem>
-                  </List>
+                  <p>
+                    {handleUndefinedField(appData.challenge)}
+                  </p>
                 </CardContent>
               </Card>
               <Card className="cardStyle">
                 <CardContent>
                   <h3 className="cardTitle">Project</h3>
-                  <List>
-                    <ListItem>
-                      <ListItemText primary="Project" secondary={handleUndefinedField(appData.project)} />
-                    </ListItem>
-                  </List>
+                  <p>
+                    {handleUndefinedField(appData.project)}
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -181,11 +177,9 @@ class Application extends Component {
               <Card className="cardStyle">
                 <CardContent>
                   <h3 className="cardTitle">Misc</h3>
-                  <List>
-                    <ListItem>
-                      <ListItemText primary="Misc" secondary={handleUndefinedField(appData.misc)} />
-                    </ListItem>
-                  </List>
+                  <p>
+                    {handleUndefinedField(appData.misc)}
+                  </p>
                 </CardContent>
               </Card>
             </div>
