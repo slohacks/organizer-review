@@ -75,8 +75,12 @@ class Application extends Component {
                     <ListItem button component="a" href={`mailto:${appData.email}`}>
                       <ListItemText primary="Email" secondary={appData.email} />
                     </ListItem>
-                    <ListItem>
-                      <ListItemText primary="Phone" secondary={appData.phoneNumber} />
+                    <ListItem
+                      button={appData.phoneNumber}
+                      component={appData.phoneNumber ? 'a' : 'li'}
+                      href={appData.phoneNumber ? `tel:${appData.phoneNumber}` : ''}
+                    >
+                      <ListItemText primary="Phone" secondary={appData.phoneNumber ? appData.phoneNumber : 'Undefined'} />
                     </ListItem>
                   </List>
                 </CardContent>
