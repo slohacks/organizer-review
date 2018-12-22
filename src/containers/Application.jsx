@@ -116,16 +116,32 @@ class Application extends Component {
               <CardContent>
                 <h3 className="cardTitle">Sites</h3>
                 <List>
-                  <ListItem button component="a" href={`https://github.com/${appData.github}`}>
+                  <ListItem
+                    button={appData.github !== undefined}
+                    component={appData.github ? 'a' : 'li'}
+                    href={appData.github ? `https://github.com/${appData.github}` : ''}
+                  >
                     <ListItemText primary="GitHub" secondary={handleUndefinedField(appData.github)} />
                   </ListItem>
-                  <ListItem button component="a" href={`https://www.linkedin.com/in/${appData.linkedin}`}>
+                  <ListItem
+                    button={appData.linkedin !== undefined}
+                    component={appData.linkedin ? 'a' : 'li'}
+                    href={appData.linkedin ? `https://www.linkedin.com/in/${appData.linkedin}` : ''}
+                  >
                     <ListItemText primary="LinkedIn" secondary={handleUndefinedField(appData.linkedin)} />
                   </ListItem>
-                  <ListItem button component="a" href={`https://${appData.website}`}>
+                  <ListItem
+                    button={appData.website !== undefined}
+                    component={appData.website ? 'a' : 'li'}
+                    href={appData.website ? `${appData.website}` : ''}
+                  >
                     <ListItemText primary="Personal Website" secondary={handleUndefinedField(appData.website)} />
                   </ListItem>
-                  <ListItem button component="a" href={appData.other_link}>
+                  <ListItem
+                    button={appData.other_link !== undefined}
+                    component={appData.other_link ? 'a' : 'li'}
+                    href={appData.other_link ? `${appData.other_link}` : ''}
+                  >
                     <ListItemText primary="Other Link" secondary={handleUndefinedField(appData.other_link)} />
                   </ListItem>
                 </List>
