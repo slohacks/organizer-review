@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { fetchApplications } from '../actions/index';
+import { fetchApplications, getResume } from '../actions/index';
 import './Application.css';
 
 const handleUndefinedField = s => (s || 'Not stated');
@@ -17,16 +19,28 @@ class Application extends Component {
   componentDidMount() {
     const {
       fetchApplications: fetchApps,
+      getResume: fetchResume,
       match: { params: { uid } },
     } = this.props;
 
     fetchApps(uid);
+    fetchResume(uid);
   }
 
   render() {
-    const { appData, errorMessage, fetching } = this.props;
+    const {
+      fetchingApplication,
+      fetchingResume,
+      appData,
+      resumeMetadata,
+      resumeUrl,
+      errorApplication,
+      errorApplicationMessage,
+      errorResume,
+      errorResumeMessage,
+    } = this.props;
 
-    if (fetching) {
+    if (fetchingApplication || fetchingResume) {
       return (
         <div>
           <CircularProgress />
@@ -34,7 +48,7 @@ class Application extends Component {
       );
     }
 
-    if (appData) {
+    if (appData && (!errorApplication || !errorResume)) {
       return (
         <div>
           <h1>{appData.name}</h1>
@@ -108,10 +122,30 @@ class Application extends Component {
                   <h3 className="cardTitle">Resume</h3>
                   <List>
                     <ListItem>
-                      <ListItemText primary="Resume" secondary={handleUndefinedField(appData.resume)} />
+                      <ListItemText primary="Name" secondary={appData.resume || 'N/A'} />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText
+                        primary="Size"
+                        secondary={resumeMetadata && resumeMetadata.size
+                          ? `${(parseInt(resumeMetadata.size, 10) / 1024 / 1024).toFixed(2)} mb`
+                          : 'N/A'}
+                      />
                     </ListItem>
                   </List>
                 </CardContent>
+                <CardActions>
+                  <Button
+                    size="small"
+                    disabled={!resumeMetadata}
+                    component="a"
+                    href={resumeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download
+                  </Button>
+                </CardActions>
               </Card>
               <Card className="cardStyle">
                 <CardContent>
@@ -191,7 +225,12 @@ class Application extends Component {
     return (
       <div>
         <h1>Error</h1>
-        <p>{errorMessage}</p>
+        {errorApplication
+          ? `<p>${errorApplicationMessage}</p>`
+          : ''}
+        {errorResume
+          ? `<p>${errorResumeMessage}</p>`
+          : ''}
       </div>
     );
   }
@@ -199,9 +238,15 @@ class Application extends Component {
 
 function mapStateToProps(state) {
   return {
+    fetchingApplication: state.app.fetchingApplication,
+    fetchingResume: state.app.fetchingResume,
     appData: state.app.data,
-    errorMessage: state.app.errorMessage,
-    fetching: state.app.fetching,
+    resumeMetadata: state.app.resumeMetadata,
+    resumeUrl: state.app.resumeUrl,
+    errorApplication: state.app.errorApplication,
+    errorResume: state.app.errorResume,
+    errorApplicationMessage: state.app.errorApplicationMessage,
+    errorResumeMessage: state.app.errorResumeMessage,
   };
 }
 
@@ -212,14 +257,27 @@ Application.propTypes = {
     }),
   }).isRequired,
   fetchApplications: PropTypes.func.isRequired,
+  getResume: PropTypes.func.isRequired,
   appData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  errorMessage: PropTypes.string,
-  fetching: PropTypes.bool.isRequired,
+  resumeMetadata: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  resumeUrl: PropTypes.string,
+  fetchingApplication: PropTypes.bool.isRequired,
+  fetchingResume: PropTypes.bool.isRequired,
+  errorApplication: PropTypes.bool.isRequired,
+  errorApplicationMessage: PropTypes.string,
+  errorResume: PropTypes.bool.isRequired,
+  errorResumeMessage: PropTypes.string,
 };
 
 Application.defaultProps = {
-  errorMessage: null,
   appData: null,
+  resumeMetadata: null,
+  resumeUrl: null,
+  errorApplicationMessage: null,
+  errorResumeMessage: null,
 };
 
-export default connect(mapStateToProps, { fetchApplications })(Application);
+export default connect(
+  mapStateToProps,
+  { fetchApplications, getResume },
+)(Application);

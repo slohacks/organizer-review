@@ -71,3 +71,20 @@ export const fetchApplications = uid => (dispatch) => {
       dispatch({ type: types.FETCH_FAIL, error });
     });
 };
+
+export const getResume = uid => (dispatch) => {
+  dispatch({ type: types.RESUME_ATTEMPT });
+  firebase.storage().ref().child(`resumes/${uid}.pdf`).getMetadata()
+    .then((metadata) => {
+      firebase.storage().ref().child(`resumes/${uid}.pdf`).getDownloadURL()
+        .then((url) => {
+          dispatch({
+            type: types.RESUME_GUCCI,
+            metadata,
+            url,
+          });
+        })
+        .catch(error => dispatch({ type: types.RESUME_FAIL, error }));
+    })
+    .catch(error => dispatch({ type: types.RESUME_FAIL, error }));
+}
