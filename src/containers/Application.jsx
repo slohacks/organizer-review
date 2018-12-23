@@ -50,7 +50,7 @@ class Application extends Component {
 
     if (fetchingApplication || fetchingResume) {
       return (
-        <div>
+        <div className="loadingSpinnerWrapper">
           <CircularProgress />
         </div>
       );

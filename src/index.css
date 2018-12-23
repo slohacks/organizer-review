@@ -132,3 +132,11 @@ h2 {
     width: 61.8vw;
   }
 }
+
+.loadingSpinnerWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
