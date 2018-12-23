@@ -24,3 +24,7 @@
   font-family: 'Roboto', 'Brandon Grotesque', 'Sans-serif';
   font-weight: 400;
 }
+
+.cardParagraph {
+  line-height: 1.15;
+}
