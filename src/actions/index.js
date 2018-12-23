@@ -78,8 +78,22 @@ export const fetchApplicants = () => (dispatch) => {
 
 export const updateQuerySearch = (searchString) => {
   return {
-    type: types.UPDATE_QUERY,
+    type: types.UPDATE_QUERY_STRING,
     queryString: searchString,
+  };
+};
+
+export const updateQueryButton = (columnString) => {
+  return {
+    type: types.UPDATE_QUERY_COLUMN,
+    queryColumn: columnString,
+  };
+};
+
+export const updateQueryCheck = (checked) => {
+  return {
+    type: types.UPDATE_QUERY_CHECKBOX,
+    queryCheckBox: checked,
   };
 };
 

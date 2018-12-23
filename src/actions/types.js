@@ -14,4 +14,6 @@ export const FETCH_GUCCI = 'fetch_gucci';
 export const FETCH_FAIL = 'fetch_fail';
 export const FETCH_APPLICANTS_SUCCESS = 'fetch_applicants_success';
 export const FETCH_APPLICANTS_FAIL = 'fetch_applicants_fail';
-export const UPDATE_QUERY = 'update_query';
+export const UPDATE_QUERY_STRING = 'update_query_string';
+export const UPDATE_QUERY_COLUMN = 'update_query_column';
+export const UPDATE_QUERY_CHECKBOX = ' update_query_checkbox';

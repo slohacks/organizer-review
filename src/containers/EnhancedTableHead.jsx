@@ -13,7 +13,7 @@ class EnhancedTableHead extends Component {
     };
 
     renderTableHeadCells() {
-      const tableHeads = ['name', 'college', 'major', 'ethnicity', 'gender', 'status'];
+      const tableHeads = ['name', 'college', 'major', 'ethnicity', 'gender', 'time', 'status'];
       const { order, orderBy } = this.props;
       return tableHeads.map((header) => {
         if (header === 'name') {

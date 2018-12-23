@@ -16,7 +16,12 @@ import Switch from '@material-ui/core/Switch';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import EnhancedTableHead from './EnhancedTableHead';
-import { fetchApplicants, updateQuerySearch } from '../actions/index';
+import {
+  fetchApplicants,
+  updateQuerySearch,
+  updateQueryButton,
+  updateQueryCheck,
+} from '../actions/index';
 
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index]);
@@ -49,9 +54,7 @@ class ListApplications extends Component {
       order: 'asc',
       orderBy: 'name',
       page: 0,
-      rowsPerPage: 50,
-      columnToQuery: 'name',
-      match: true,
+      rowsPerPage: 30,
     };
   }
 
@@ -62,16 +65,15 @@ class ListApplications extends Component {
     }
   }
 
-    handleRequestSort = (event, property) => {
-      const orderBy = property;
-      let order = 'desc';
-      const { orderBy: orderByFromState, order: orderFromState } = this.state;
-      if (orderByFromState === property && orderFromState === 'desc') {
-        order = 'asc';
-      }
-
-      this.setState({ order, orderBy });
-    };
+  handleRequestSort = (event, property) => {
+    const orderBy = property;
+    let order = 'desc';
+    const { orderBy: orderByFromState, order: orderFromState } = this.state;
+    if (orderByFromState === property && orderFromState === 'desc') {
+      order = 'asc';
+    }
+    this.setState({ order, orderBy });
+  };
 
     handleChangePage = (event, page) => {
       this.setState({ page });
@@ -79,15 +81,6 @@ class ListApplications extends Component {
 
     handleChangeRowsPerPage = (event) => {
       this.setState({ rowsPerPage: event.target.value });
-    };
-
-
-    handleChange = (event) => {
-      this.setState({ columnToQuery: event.target.value });
-    };
-
-    handleCheckBox = (event) => {
-      this.setState({ match: event.target.checked });
     };
 
     renderApplications(filteredApps) {
@@ -110,6 +103,7 @@ class ListApplications extends Component {
               <TableCell align="right">{n.major}</TableCell>
               <TableCell align="right">{n.ethnicity}</TableCell>
               <TableCell align="right">{n.gender}</TableCell>
+              <TableCell align="right">{`${n.time.toDate().toDateString()}, ${n.time.toDate().toLocaleTimeString()}`}</TableCell>
               <TableCell align="right">{n.status}</TableCell>
             </TableRow>
           );
@@ -123,15 +117,17 @@ class ListApplications extends Component {
         fetching,
         classes,
         updateQuerySearch: querySearch,
-        query,
+        updateQueryButton: queryColumn,
+        updateQueryCheck: queryChecked,
+        querySearchString,
+        queryColumnString,
+        queryCheckedBool,
       } = this.props;
       const {
         order,
         orderBy,
         rowsPerPage,
         page,
-        columnToQuery,
-        match,
       } = this.state;
 
       if (fetching) {
@@ -143,12 +139,16 @@ class ListApplications extends Component {
       }
 
       if (applications) {
-        let filteredApplications = query
-          ? applications.filter(x => x[columnToQuery].toLowerCase().includes(query))
+        let filteredApplications = querySearchString
+          ? applications.filter(
+            x => x[queryColumnString].toLowerCase().includes(querySearchString.toLowerCase()),
+          )
           : applications;
-        if (!match) {
-          filteredApplications = query
-            ? applications.filter(x => !x[columnToQuery].toLowerCase().includes(query))
+        if (!queryCheckedBool) {
+          filteredApplications = querySearchString
+            ? applications.filter(
+              x => !x[queryColumnString].toLowerCase().includes(querySearchString.toLowerCase()),
+            )
             : applications;
         }
         return (
@@ -157,24 +157,25 @@ class ListApplications extends Component {
             <TextField
               helperText="Query"
               onChange={event => querySearch(event.target.value)}
-              value={query}
+              value={querySearchString}
             />
             <InputLabel>Select a column</InputLabel>
             <Select
-              value={columnToQuery}
-              onChange={this.handleChange}
+              value={queryColumnString}
+              onChange={event => queryColumn(event.target.value)}
             >
               <MenuItem value="name">Name</MenuItem>
               <MenuItem value="college">College</MenuItem>
               <MenuItem value="major">Major</MenuItem>
               <MenuItem value="ethnicity">Ethnicity</MenuItem>
+              <MenuItem value="gender">Gender</MenuItem>
             </Select>
             <FormControlLabel
               control={(
                 <Switch
-                  checked={match}
-                  onChange={this.handleCheckBox}
-                  value="match"
+                  checked={queryCheckedBool}
+                  onChange={event => queryChecked(event.target.checked)}
+                  value="queryCheckedBool"
                   color="primary"
                 />
               )}
@@ -225,10 +226,14 @@ ListApplications.propTypes = {
   applications: PropTypes.arrayOf(PropTypes.shape({})),
   history: PropTypes.shape().isRequired,
   classes: PropTypes.shape().isRequired,
-  query: PropTypes.string.isRequired,
+  querySearchString: PropTypes.string.isRequired,
+  queryColumnString: PropTypes.string.isRequired,
+  queryCheckedBool: PropTypes.bool.isRequired,
   fetching: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,
   updateQuerySearch: PropTypes.func.isRequired,
+  updateQueryButton: PropTypes.func.isRequired,
+  updateQueryCheck: PropTypes.func.isRequired,
 };
 
 ListApplications.defaultProps = {
@@ -255,10 +260,17 @@ function mapStateToProps(state) {
     applications: state.apps.data,
     errorMessage: state.apps.errorMessage,
     fetching: state.apps.fetching,
-    query: state.query.queryValue,
+    querySearchString: state.queryValues.querySearch,
+    queryColumnString: state.queryValues.queryColumn,
+    queryCheckedBool: state.queryValues.queryChecked,
   };
 }
 
 export default
 connect(mapStateToProps,
-  { fetchApplicants, updateQuerySearch })(withStyles(styles)(ListApplications));
+  {
+    fetchApplicants,
+    updateQuerySearch,
+    updateQueryButton,
+    updateQueryCheck,
+  })(withStyles(styles)(ListApplications));
