@@ -6,7 +6,9 @@
 
 .cardStyle {
   display: inline-block;
-  min-width: 275;
+  min-width: 275px;
+  max-width: 30%;
+  flex: 1 0 30%;
   margin-right: 1rem;
   margin-bottom: 1rem;
 }
