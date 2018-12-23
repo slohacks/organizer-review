@@ -18,7 +18,10 @@ import { fetchApplications, getResume } from '../actions/index';
 import './Application.css';
 
 const handleUndefinedField = s => (s || 'Not stated');
-const handleUndefinedFieldWithOther = (s, o) => (s || handleUndefinedField(o));
+const handleUndefinedFieldWithOther = (s, o) => {
+  if (s && s === 'Other') return o || s;
+  return handleUndefinedField(s);
+};
 const parseGradDate = (date) => {
   if (date === undefined) return handleUndefinedField(date);
 
@@ -238,16 +241,16 @@ class Application extends Component {
               <div className="rowStyle">
                 <Card className="cardStyle">
                   <CardContent>
-                    <h3 className="cardTitle">Challenge</h3>
-                    <p>
+                    <h3 className="cardTitle">What&apos;s a challenging situation you&apos;ve run into, and how did you go about solving it?</h3>
+                    <p className="cardParagraph">
                       {handleUndefinedField(appData.challenge)}
                     </p>
                   </CardContent>
                 </Card>
                 <Card className="cardStyle">
                   <CardContent>
-                    <h3 className="cardTitle">Project</h3>
-                    <p>
+                    <h3 className="cardTitle">Tell us about one of the projects you&apos;re most proud of.</h3>
+                    <p className="cardParagraph">
                       {handleUndefinedField(appData.project)}
                     </p>
                   </CardContent>
@@ -259,8 +262,8 @@ class Application extends Component {
               <div className="rowStyle">
                 <Card className="cardStyle">
                   <CardContent>
-                    <h3 className="cardTitle">Other Comments</h3>
-                    <p>
+                    <h3 className="cardTitle">Anything else we should know?</h3>
+                    <p className="cardParagraph">
                       {handleUndefinedField(appData.misc)}
                     </p>
                   </CardContent>
