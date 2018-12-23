@@ -14,6 +14,14 @@ import './Application.css';
 
 const handleUndefinedField = s => (s || 'Not stated');
 const handleUndefinedFieldWithOther = (s, o) => (s || handleUndefinedField(o));
+const parseGradDate = (date) => {
+  if (date === undefined) return handleUndefinedField(date);
+
+  const months = ['Janurary', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const dateArr = date.split('-');
+
+  return `${months[parseInt(dateArr[1], 10) - 1]} ${dateArr[0]}`;
+};
 
 class Application extends Component {
   componentDidMount() {
@@ -60,7 +68,7 @@ class Application extends Component {
                   <h3 className="cardTitle">Demographics</h3>
                   <List>
                     <ListItem>
-                      <ListItemText primary="Graduation Date" secondary={handleUndefinedField(appData.grad_date)} />
+                      <ListItemText primary="Graduation Date" secondary={parseGradDate(appData.grad_date)} />
                     </ListItem>
                     <ListItem>
                       <ListItemText primary="Gender" secondary={handleUndefinedFieldWithOther(appData.gender, appData.other_gender)} />
