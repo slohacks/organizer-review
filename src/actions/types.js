@@ -15,3 +15,6 @@ export const FETCH_FAIL = 'fetch_fail';
 export const RESUME_ATTEMPT = 'resume_attempt';
 export const RESUME_GUCCI = 'resume_gucci';
 export const RESUME_FAIL = 'resume_fail';
+export const STATUS_ATTEMPT = 'status_attempt';
+export const STATUS_GUCCI = 'status_gucci';
+export const STATUS_FAIL = 'status_fail';

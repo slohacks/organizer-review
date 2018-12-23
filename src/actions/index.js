@@ -88,3 +88,12 @@ export const getResume = uid => (dispatch) => {
     })
     .catch(error => dispatch({ type: types.RESUME_FAIL, error }));
 };
+
+export const updateAppStatus = (uid, newStatus) => (dispatch) => {
+  dispatch({ type: types.STATUS_ATTEMPT, newStatus });
+  applicationsRef.doc(uid).update({ status: newStatus })
+    .then(() => {
+      dispatch({ type: types.STATUS_GUCCI, status: newStatus });
+    })
+    .catch(error => dispatch({ type: types.STATUS_FAIL, error }));
+};
