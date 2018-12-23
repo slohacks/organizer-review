@@ -133,10 +133,24 @@ h2 {
   }
 }
 
-.loadingSpinnerWrapper {
+.appBarPageWrapper {
   width: 100vw;
   height: 100vh;
+}
+
+.loadingSpinnerWrapper {
+  width: 100vw;
+  height: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+button.leftButton {
+  margin-left: -12px;
+  margin-right: 20px;
+}
+
+.grow {
+  flex-grow: 1;
 }

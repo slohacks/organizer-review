@@ -9,6 +9,11 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import { fetchApplications, getResume } from '../actions/index';
 import './Application.css';
 
@@ -50,8 +55,20 @@ class Application extends Component {
 
     if (fetchingApplication || fetchingResume) {
       return (
-        <div className="loadingSpinnerWrapper">
-          <CircularProgress />
+        <div className="appBarPageWrapper">
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton color="inherit" className="leftButton">
+                <ArrowBack />
+              </IconButton>
+              <Typography variant="h6" color="inherit" component="h1" className="grow">
+                Loading Application
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <div className="loadingSpinnerWrapper">
+            <CircularProgress />
+          </div>
         </div>
       );
     }
@@ -59,7 +76,17 @@ class Application extends Component {
     if (appData && (!errorApplication || !errorResume)) {
       return (
         <div>
-          <h1>{appData.name}</h1>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton color="inherit" className="leftButton">
+                <ArrowBack />
+              </IconButton>
+              <Typography variant="h6" color="inherit" component="h1" className="grow">
+                {appData.name}
+              </Typography>
+              <Button color="inherit">Stats</Button>
+            </Toolbar>
+          </AppBar>
           <div className="sides">
             <section>
               <h2>Personal Info</h2>
@@ -247,14 +274,25 @@ class Application extends Component {
     }
 
     return (
-      <div>
-        <h1>Error</h1>
-        {errorApplication
-          ? `<p>${errorApplicationMessage}</p>`
-          : ''}
-        {errorResume
-          ? `<p>${errorResumeMessage}</p>`
-          : ''}
+      <div className="appBarPageWrapper">
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton color="inherit" className="leftButton">
+              <ArrowBack />
+            </IconButton>
+            <Typography variant="h6" color="inherit" component="h1" className="grow">
+              Application Error
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div className="sides">
+          {errorApplication
+            ? `<p>${errorApplicationMessage}</p>`
+            : ''}
+          {errorResume
+            ? `<p>${errorResumeMessage}</p>`
+            : ''}
+        </div>
       </div>
     );
   }
