@@ -12,3 +12,6 @@ export const SIGN_OUT_FAIL = 'sign_out_fail';
 export const FETCH_ATTEMPT = 'fetch_attempt';
 export const FETCH_GUCCI = 'fetch_gucci';
 export const FETCH_FAIL = 'fetch_fail';
+export const RESUME_ATTEMPT = 'resume_attempt';
+export const RESUME_GUCCI = 'resume_gucci';
+export const RESUME_FAIL = 'resume_fail';
