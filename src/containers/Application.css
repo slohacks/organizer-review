@@ -7,10 +7,16 @@
 .cardStyle {
   display: inline-block;
   min-width: 275px;
-  max-width: 50%;
-  flex: 1 0 40%;
+  flex: 1 0 100%;
   margin-right: 1rem;
   margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 992px) {
+  .cardStyle {
+    max-width: 50%;
+    flex: 1 0 40%;
+  }
 }
 
 .cardTitle {
