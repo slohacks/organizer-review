@@ -286,10 +286,10 @@ class Application extends Component {
         </AppBar>
         <div className="sides">
           {errorApplication
-            ? `<p>${errorApplicationMessage}</p>`
+            ? <p>{errorApplicationMessage}</p>
             : ''}
           {errorResume
-            ? `<p>${errorResumeMessage}</p>`
+            ? <p>{errorResumeMessage}</p>
             : ''}
         </div>
       </div>
