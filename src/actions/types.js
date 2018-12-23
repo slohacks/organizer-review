@@ -17,3 +17,6 @@ export const FETCH_APPLICANTS_FAIL = 'fetch_applicants_fail';
 export const UPDATE_QUERY_STRING = 'update_query_string';
 export const UPDATE_QUERY_COLUMN = 'update_query_column';
 export const UPDATE_QUERY_CHECKBOX = ' update_query_checkbox';
+export const RESUME_ATTEMPT = 'resume_attempt';
+export const RESUME_GUCCI = 'resume_gucci';
+export const RESUME_FAIL = 'resume_fail';

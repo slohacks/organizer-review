@@ -1,0 +1,30 @@
+.rowStyle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.cardStyle {
+  display: inline-block;
+  min-width: 275px;
+  flex: 1 0 100%;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 992px) {
+  .cardStyle {
+    max-width: 50%;
+    flex: 1 0 40%;
+  }
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: 'Roboto', 'Brandon Grotesque', 'Sans-serif';
+  font-weight: 400;
+}
+
+.cardParagraph {
+  line-height: 1.15;
+}

@@ -3,119 +3,298 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import { fetchApplications } from '../actions/index';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import { fetchApplications, getResume } from '../actions/index';
+import './Application.css';
+
+const handleUndefinedField = s => (s || 'Not stated');
+const handleUndefinedFieldWithOther = (s, o) => {
+  if (s && s === 'Other') return o || s;
+  return handleUndefinedField(s);
+};
+const parseGradDate = (date) => {
+  if (date === undefined) return handleUndefinedField(date);
+
+  const months = ['Janurary', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const dateArr = date.split('-');
+
+  return `${months[parseInt(dateArr[1], 10) - 1]} ${dateArr[0]}`;
+};
 
 class Application extends Component {
   componentDidMount() {
     const {
       fetchApplications: fetchApps,
+      getResume: fetchResume,
       match: { params: { uid } },
     } = this.props;
 
     fetchApps(uid);
+    fetchResume(uid);
   }
 
   render() {
-    const { appData, errorMessage, fetching } = this.props;
+    const {
+      fetchingApplication,
+      fetchingResume,
+      appData,
+      resumeMetadata,
+      resumeUrl,
+      errorApplication,
+      errorApplicationMessage,
+      errorResume,
+      errorResumeMessage,
+    } = this.props;
 
-    const tempCardStyle = {
-      display: 'inline-block',
-      minWidth: 275,
-      marginRight: '1rem',
-      marginBottom: '1rem',
-    };
-
-    const rowStyle = {
-      display: 'flex',
-      flexWrap: 'wrap',
-      alignItems: 'flex-start',
-    };
-
-    if (fetching) {
+    if (fetchingApplication || fetchingResume) {
       return (
-        <div>
-          <CircularProgress />
+        <div className="appBarPageWrapper">
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton color="inherit" className="leftButton">
+                <ArrowBack />
+              </IconButton>
+              <Typography variant="h6" color="inherit" component="h1" className="grow">
+                Loading Application
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <div className="loadingSpinnerWrapper">
+            <CircularProgress />
+          </div>
         </div>
       );
     }
 
-    if (appData) {
+    if (appData && (!errorApplication || !errorResume)) {
       return (
         <div>
-          <h1>{appData.name}</h1>
-          <section>
-            <h2>Personal Info</h2>
-            <div style={rowStyle}>
-              <Card style={tempCardStyle}>
-                <CardContent>
-                  <h3>Demographics</h3>
-                  <p>
-                    Graduation Date:
-                    {` ${appData.grad_date}`}
-                  </p>
-                  <p>
-                    Gender:
-                    {` ${appData.gender ? appData.gender : appData.other_gender}`}
-                  </p>
-                  <p>
-                    Ethnicity:
-                    {` ${appData.ethnicity ? appData.ethnicity : appData.other_ethnicity}`}
-                  </p>
-                </CardContent>
-              </Card>
-              <Card style={tempCardStyle}>
-                <CardContent>
-                  <h3>Travel</h3>
-                  <p>
-                    College:
-                    {` ${appData.college}`}
-                  </p>
-                  <p>
-                    City:
-                    {` ${appData.city}`}
-                  </p>
-                </CardContent>
-              </Card>
-              <Card style={tempCardStyle}>
-                <CardContent>
-                  <h3>Contact</h3>
-                  <p>
-                    Email:
-                    {` ${appData.email}`}
-                  </p>
-                  <p>
-                    Phone:
-                    {` ${appData.phone}`}
-                  </p>
-                </CardContent>
-              </Card>
-              <Card style={tempCardStyle}>
-                <CardContent>
-                  <h3>Food</h3>
-                  <p>
-                    Diet:
-                    {` ${appData.diet}`}
-                  </p>
-                  <p>
-                    Allergies:
-                    {` ${appData.allergies}`}
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </section>
-          <h2>Experience</h2>
-          <h2>Short Answer</h2>
-          <h2>Misc</h2>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton color="inherit" className="leftButton">
+                <ArrowBack />
+              </IconButton>
+              <Typography variant="h6" color="inherit" component="h1" className="grow">
+                {appData.name}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <div className="sides">
+            <section>
+              <h2>Personal Info</h2>
+              <div className="rowStyle">
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Demographics</h3>
+                    <List>
+                      <ListItem>
+                        <ListItemText primary="Graduation Date" secondary={parseGradDate(appData.grad_date)} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Gender" secondary={handleUndefinedFieldWithOther(appData.gender, appData.other_gender)} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText primary="Ethnicity" secondary={handleUndefinedFieldWithOther(appData.ethnicity, appData.other_ethnicity)} />
+                      </ListItem>
+                    </List>
+                  </CardContent>
+                </Card>
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Travel</h3>
+                    <List>
+                      <ListItem>
+                        <ListItemText primary="College" secondary={handleUndefinedField(appData.college)} />
+                      </ListItem>
+                      <ListItem
+                        button={appData.city !== undefined}
+                        component={appData.city ? 'a' : 'li'}
+                        href={appData.city ? `https://www.google.com/maps/place/${appData.city}` : ''}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ListItemText primary="City" secondary={handleUndefinedField(appData.city)} />
+                      </ListItem>
+                    </List>
+                  </CardContent>
+                </Card>
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Contact</h3>
+                    <List>
+                      <ListItem button component="a" href={`mailto:${appData.email}`}>
+                        <ListItemText primary="Email" secondary={handleUndefinedField(appData.email)} />
+                      </ListItem>
+                      <ListItem
+                        button={appData.phoneNumber !== undefined}
+                        component={appData.phoneNumber ? 'a' : 'li'}
+                        href={appData.phoneNumber ? `tel:${appData.phoneNumber}` : ''}
+                      >
+                        <ListItemText primary="Phone" secondary={handleUndefinedField(appData.phoneNumber)} />
+                      </ListItem>
+                    </List>
+                  </CardContent>
+                </Card>
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Food</h3>
+                    <List>
+                      <ListItem>
+                        <ListItemText primary="Diet" secondary={handleUndefinedField(appData.diet)} />
+                      </ListItem>
+                      <ListItemText primary="Allergies" secondary={handleUndefinedField(appData.allergies)} />
+                    </List>
+                  </CardContent>
+                </Card>
+              </div>
+            </section>
+            <section>
+              <h2>Experience</h2>
+              <div className="rowStyle">
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Resume</h3>
+                    <List>
+                      <ListItem>
+                        <ListItemText primary="Name" secondary={appData.resume || 'N/A'} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary="Size"
+                          secondary={resumeMetadata && resumeMetadata.size
+                            ? `${(parseInt(resumeMetadata.size, 10) / 1024 / 1024).toFixed(2)} mb`
+                            : 'N/A'}
+                        />
+                      </ListItem>
+                    </List>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      size="small"
+                      disabled={!resumeMetadata}
+                      component="a"
+                      href={resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Download
+                    </Button>
+                  </CardActions>
+                </Card>
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Sites</h3>
+                    <List>
+                      <ListItem
+                        button={appData.github !== undefined}
+                        component={appData.github ? 'a' : 'li'}
+                        href={appData.github ? `https://github.com/${appData.github}` : ''}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ListItemText primary="GitHub" secondary={handleUndefinedField(appData.github)} />
+                      </ListItem>
+                      <ListItem
+                        button={appData.linkedin !== undefined}
+                        component={appData.linkedin ? 'a' : 'li'}
+                        href={appData.linkedin ? `https://www.linkedin.com/in/${appData.linkedin}` : ''}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ListItemText primary="LinkedIn" secondary={handleUndefinedField(appData.linkedin)} />
+                      </ListItem>
+                      <ListItem
+                        button={appData.website !== undefined}
+                        component={appData.website ? 'a' : 'li'}
+                        href={appData.website ? `${appData.website}` : ''}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ListItemText primary="Personal Website" secondary={handleUndefinedField(appData.website)} />
+                      </ListItem>
+                      <ListItem
+                        button={appData.other_link !== undefined}
+                        component={appData.other_link ? 'a' : 'li'}
+                        href={appData.other_link ? `${appData.other_link}` : ''}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ListItemText primary="Other Link" secondary={handleUndefinedField(appData.other_link)} />
+                      </ListItem>
+                    </List>
+                  </CardContent>
+                </Card>
+              </div>
+            </section>
+            <section>
+              <h2>Short Answer</h2>
+              <div className="rowStyle">
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">What&apos;s a challenging situation you&apos;ve run into, and how did you go about solving it?</h3>
+                    <p className="cardParagraph">
+                      {handleUndefinedField(appData.challenge)}
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Tell us about one of the projects you&apos;re most proud of.</h3>
+                    <p className="cardParagraph">
+                      {handleUndefinedField(appData.project)}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </section>
+            <section>
+              <h2>Misc</h2>
+              <div className="rowStyle">
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Anything else we should know?</h3>
+                    <p className="cardParagraph">
+                      {handleUndefinedField(appData.misc)}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </section>
+          </div>
         </div>
       );
     }
 
     return (
-      <div>
-        <h1>Error</h1>
-        <p>{errorMessage}</p>
+      <div className="appBarPageWrapper">
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton color="inherit" className="leftButton">
+              <ArrowBack />
+            </IconButton>
+            <Typography variant="h6" color="inherit" component="h1" className="grow">
+              Application Error
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div className="sides">
+          {errorApplication
+            ? <p>{errorApplicationMessage}</p>
+            : ''}
+          {errorResume
+            ? <p>{errorResumeMessage}</p>
+            : ''}
+        </div>
       </div>
     );
   }
@@ -123,9 +302,15 @@ class Application extends Component {
 
 function mapStateToProps(state) {
   return {
+    fetchingApplication: state.app.fetchingApplication,
+    fetchingResume: state.app.fetchingResume,
     appData: state.app.data,
-    errorMessage: state.app.errorMessage,
-    fetching: state.app.fetching,
+    resumeMetadata: state.app.resumeMetadata,
+    resumeUrl: state.app.resumeUrl,
+    errorApplication: state.app.errorApplication,
+    errorResume: state.app.errorResume,
+    errorApplicationMessage: state.app.errorApplicationMessage,
+    errorResumeMessage: state.app.errorResumeMessage,
   };
 }
 
@@ -136,14 +321,27 @@ Application.propTypes = {
     }),
   }).isRequired,
   fetchApplications: PropTypes.func.isRequired,
+  getResume: PropTypes.func.isRequired,
   appData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  errorMessage: PropTypes.string,
-  fetching: PropTypes.bool.isRequired,
+  resumeMetadata: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  resumeUrl: PropTypes.string,
+  fetchingApplication: PropTypes.bool.isRequired,
+  fetchingResume: PropTypes.bool.isRequired,
+  errorApplication: PropTypes.bool.isRequired,
+  errorApplicationMessage: PropTypes.string,
+  errorResume: PropTypes.bool.isRequired,
+  errorResumeMessage: PropTypes.string,
 };
 
 Application.defaultProps = {
-  errorMessage: null,
   appData: null,
+  resumeMetadata: null,
+  resumeUrl: null,
+  errorApplicationMessage: null,
+  errorResumeMessage: null,
 };
 
-export default connect(mapStateToProps, { fetchApplications })(Application);
+export default connect(
+  mapStateToProps,
+  { fetchApplications, getResume },
+)(Application);
