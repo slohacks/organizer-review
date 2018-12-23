@@ -84,7 +84,6 @@ class Application extends Component {
               <Typography variant="h6" color="inherit" component="h1" className="grow">
                 {appData.name}
               </Typography>
-              <Button color="inherit">Stats</Button>
             </Toolbar>
           </AppBar>
           <div className="sides">
