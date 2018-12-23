@@ -78,7 +78,13 @@ class Application extends Component {
                     <ListItem>
                       <ListItemText primary="College" secondary={handleUndefinedField(appData.college)} />
                     </ListItem>
-                    <ListItem>
+                    <ListItem
+                      button={appData.city !== undefined}
+                      component={appData.city ? 'a' : 'li'}
+                      href={appData.city ? `https://www.google.com/maps/place/${appData.city}` : ''}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <ListItemText primary="City" secondary={handleUndefinedField(appData.city)} />
                     </ListItem>
                   </List>
