@@ -87,4 +87,4 @@ export const getResume = uid => (dispatch) => {
         .catch(error => dispatch({ type: types.RESUME_FAIL, error }));
     })
     .catch(error => dispatch({ type: types.RESUME_FAIL, error }));
-}
+};
