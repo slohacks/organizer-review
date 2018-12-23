@@ -30,7 +30,7 @@ const parseGradDate = (date) => {
   return `${months[parseInt(dateArr[1], 10) - 1]} ${dateArr[0]}`;
 };
 const parseAppStatus = (status) => {
-  if (status === undefined) return 'Undecided';
+  if (!status) return 'Undecided';
 
   const statusEnum = ['Undecided', 'Accepted', 'Waitlisted', 'Rejected'];
   return statusEnum[status];
