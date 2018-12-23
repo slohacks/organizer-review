@@ -268,6 +268,36 @@ class Application extends Component {
                     </p>
                   </CardContent>
                 </Card>
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Application Decision</h3>
+                    <ListItem>
+                      <ListItemText primary="Status" secondary={appData.status || 'Undecided'} />
+                    </ListItem>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      size="small"
+                      color="primary"
+                      variant={appData.status && appData.status === 0 ? 'contained' : 'text'}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      size="small"
+                      variant={appData.status && appData.status === 1 ? 'contained' : 'text'}
+                    >
+                      Waitlist
+                    </Button>
+                    <Button
+                      size="small"
+                      color="secondary"
+                      variant={appData.status && appData.status === 2 ? 'contained' : 'text'}
+                    >
+                      Reject
+                    </Button>
+                  </CardActions>
+                </Card>
               </div>
             </section>
           </div>
