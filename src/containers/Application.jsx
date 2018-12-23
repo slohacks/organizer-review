@@ -216,7 +216,7 @@ class Application extends Component {
                       <ListItem
                         button={appData.website !== undefined}
                         component={appData.website ? 'a' : 'li'}
-                        href={appData.website ? `${appData.website}` : ''}
+                        href={appData.website ? `https://${appData.website}` : ''}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -225,7 +225,7 @@ class Application extends Component {
                       <ListItem
                         button={appData.other_link !== undefined}
                         component={appData.other_link ? 'a' : 'li'}
-                        href={appData.other_link ? `${appData.other_link}` : ''}
+                        href={appData.other_link ? `https://${appData.other_link}` : ''}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
