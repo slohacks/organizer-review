@@ -155,6 +155,8 @@ class Application extends Component {
                       button={appData.github !== undefined}
                       component={appData.github ? 'a' : 'li'}
                       href={appData.github ? `https://github.com/${appData.github}` : ''}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <ListItemText primary="GitHub" secondary={handleUndefinedField(appData.github)} />
                     </ListItem>
@@ -162,6 +164,8 @@ class Application extends Component {
                       button={appData.linkedin !== undefined}
                       component={appData.linkedin ? 'a' : 'li'}
                       href={appData.linkedin ? `https://www.linkedin.com/in/${appData.linkedin}` : ''}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <ListItemText primary="LinkedIn" secondary={handleUndefinedField(appData.linkedin)} />
                     </ListItem>
@@ -169,6 +173,8 @@ class Application extends Component {
                       button={appData.website !== undefined}
                       component={appData.website ? 'a' : 'li'}
                       href={appData.website ? `${appData.website}` : ''}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <ListItemText primary="Personal Website" secondary={handleUndefinedField(appData.website)} />
                     </ListItem>
@@ -176,6 +182,8 @@ class Application extends Component {
                       button={appData.other_link !== undefined}
                       component={appData.other_link ? 'a' : 'li'}
                       href={appData.other_link ? `${appData.other_link}` : ''}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <ListItemText primary="Other Link" secondary={handleUndefinedField(appData.other_link)} />
                     </ListItem>
