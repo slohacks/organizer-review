@@ -16,6 +16,7 @@ import Switch from '@material-ui/core/Switch';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import EnhancedTableHead from './EnhancedTableHead';
+import requireAuth from '../components/requireAuth';
 import {
   fetchApplicants,
   updateQuerySearch,
@@ -273,4 +274,4 @@ connect(mapStateToProps,
     updateQuerySearch,
     updateQueryButton,
     updateQueryCheck,
-  })(withStyles(styles)(ListApplications));
+  })(requireAuth((withStyles(styles)(ListApplications))));
