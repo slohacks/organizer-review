@@ -18,7 +18,10 @@ import { fetchApplications, getResume } from '../actions/index';
 import './Application.css';
 
 const handleUndefinedField = s => (s || 'Not stated');
-const handleUndefinedFieldWithOther = (s, o) => (s || handleUndefinedField(o));
+const handleUndefinedFieldWithOther = (s, o) => {
+  if (s && s === 'Other') return o || s;
+  return handleUndefinedField(s);
+};
 const parseGradDate = (date) => {
   if (date === undefined) return handleUndefinedField(date);
 
