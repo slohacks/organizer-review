@@ -11,18 +11,18 @@ import { login } from '../actions/index';
 
 class Login extends Component {
   componentDidMount() {
-    const { auth } = this.props;
+    const { history, auth } = this.props;
 
     if (auth) {
-      console.log('Logged in!');
+      history.push('/applications/');
     }
   }
 
   componentDidUpdate() {
-    const { auth } = this.props;
+    const { history, auth } = this.props;
 
     if (auth) {
-      console.log('Logged in!');
+      history.push('/applications/');
     }
   }
 
@@ -102,11 +102,10 @@ class Login extends Component {
 
 function validate(values) {
   const errors = {};
-  const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
   if (!values.email) {
     errors.email = 'Email required';
-  } else if (!re.test(values.email)) {
-    errors.email = 'Invalid email address';
+  } else if (!values.email.match('.*@slohacks[.]com')) {
+    errors.email = 'SLO Hacks Email Required';
   }
 
   if (!values.password) {
