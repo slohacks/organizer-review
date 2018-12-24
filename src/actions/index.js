@@ -53,6 +53,50 @@ export const signout = () => (dispatch) => {
     });
 };
 
+export const fetchApplicants = () => (dispatch) => {
+  dispatch({ type: types.FETCH_ATTEMPT });
+  const apps = [];
+  applicationsRef.get()
+    .then((snapshot) => {
+      if (snapshot) {
+        snapshot.forEach((doc) => {
+          const appData = { ...doc.data(), uid: doc.id };
+          apps.push(appData);
+        });
+        dispatch({ type: types.FETCH_APPLICANTS_SUCCESS, data: apps });
+      } else {
+        dispatch({
+          type: types.FETCH_APPLICANTS_FAIL,
+          error: { message: 'Error fetching data.' },
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({ type: types.FETCH_APPLICANTS_FAIL, error });
+    });
+};
+
+export const updateQuerySearch = (searchString) => {
+  return {
+    type: types.UPDATE_QUERY_STRING,
+    queryString: searchString,
+  };
+};
+
+export const updateQueryButton = (columnString) => {
+  return {
+    type: types.UPDATE_QUERY_COLUMN,
+    queryColumn: columnString,
+  };
+};
+
+export const updateQueryCheck = (checked) => {
+  return {
+    type: types.UPDATE_QUERY_CHECKBOX,
+    queryCheckBox: checked,
+  };
+};
+
 export const fetchApplications = uid => (dispatch) => {
   dispatch({ type: types.FETCH_ATTEMPT });
   applicationsRef.doc(uid).get()

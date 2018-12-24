@@ -7,6 +7,7 @@ import ReduxThunk from 'redux-thunk';
 
 import reducers from './reducers';
 import Application from './containers/Application';
+import ListApplications from './containers/ListApplications';
 import SignUp from './containers/SignUp';
 import Login from './containers/Login';
 import ForgotPassword from './containers/ForgotPassword';
@@ -29,6 +30,7 @@ ReactDOM.render(
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
         <Route path="/application/:uid" component={Application} />
+        <Route path="/applications/" component={ListApplications} />
         <Route component={NotFound} />
       </Switch>
     </HashRouter>
