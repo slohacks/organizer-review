@@ -156,7 +156,7 @@ class ListApplications extends Component {
         return (
           <div className="sidesTable">
             <div className="sides">
-              <h1>Applications Data Loaded</h1>
+              <h1>Applications</h1>
               <TextField
                 helperText="Query"
                 onChange={event => querySearch(event.target.value)}
