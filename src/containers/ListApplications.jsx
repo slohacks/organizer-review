@@ -55,7 +55,7 @@ class ListApplications extends Component {
       order: 'asc',
       orderBy: 'name',
       page: 0,
-      rowsPerPage: 30,
+      rowsPerPage: 8,
     };
   }
 
@@ -194,7 +194,7 @@ class ListApplications extends Component {
                 </TableBody>
               </Table>
               <TablePagination
-                rowsPerPageOptions={[50, 100, 250]}
+                rowsPerPageOptions={[8, 32, 128]}
                 component="div"
                 count={filteredApplications.length}
                 rowsPerPage={rowsPerPage}
