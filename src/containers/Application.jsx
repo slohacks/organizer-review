@@ -14,7 +14,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBack from '@material-ui/icons/ArrowBack';
-import { fetchApplications, getResume, updateAppStatus } from '../actions/index';
+import {
+  fetchApplications,
+  getResume,
+  updateAppStatus,
+  clearApplication,
+} from '../actions/index';
 import './Application.css';
 
 const handleUndefinedField = s => (s || 'Not stated');
@@ -53,6 +58,11 @@ class Application extends Component {
     } = this.props;
     fetchApps(uid);
     fetchResume(uid);
+  }
+
+  componentWillUnmount() {
+    const { clearApplication: clear } = this.props;
+    clear();
   }
 
   acceptApp() {
@@ -399,6 +409,7 @@ Application.propTypes = {
     }),
   }).isRequired,
   fetchApplications: PropTypes.func.isRequired,
+  clearApplication: PropTypes.func.isRequired,
   getResume: PropTypes.func.isRequired,
   updateAppStatus: PropTypes.func.isRequired,
   appData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -426,5 +437,10 @@ Application.defaultProps = {
 
 export default connect(
   mapStateToProps,
-  { fetchApplications, getResume, updateAppStatus },
+  {
+    fetchApplications,
+    getResume,
+    updateAppStatus,
+    clearApplication,
+  },
 )(Application);

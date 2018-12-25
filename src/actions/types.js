@@ -23,3 +23,4 @@ export const RESUME_FAIL = 'resume_fail';
 export const STATUS_ATTEMPT = 'status_attempt';
 export const STATUS_GUCCI = 'status_gucci';
 export const STATUS_FAIL = 'status_fail';
+export const CLEAR_APPLICATION = 'clear_application';

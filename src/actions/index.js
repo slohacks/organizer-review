@@ -141,3 +141,7 @@ export const updateAppStatus = (uid, newStatus) => (dispatch) => {
     })
     .catch(error => dispatch({ type: types.STATUS_FAIL, error }));
 };
+
+export const clearApplication = () => (dispatch) => {
+  dispatch({ type: types.CLEAR_APPLICATION });
+};
