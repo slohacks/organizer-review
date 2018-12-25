@@ -315,7 +315,7 @@ class ListApplications extends Component {
                     <SearchIcon />
                   </div>
                   <InputBase
-                    placeholder={`Filter ${queryColumnString}…`}
+                    placeholder={`Filter by ${queryColumnString}…`}
                     classes={{
                       root: classes.inputRoot,
                       input: classes.inputInput,
