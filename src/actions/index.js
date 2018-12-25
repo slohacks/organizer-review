@@ -55,25 +55,24 @@ export const signout = () => (dispatch) => {
 
 export const fetchApplicants = () => (dispatch) => {
   dispatch({ type: types.FETCH_ATTEMPT });
-  const apps = [];
-  applicationsRef.get()
-    .then((snapshot) => {
-      if (snapshot) {
-        snapshot.forEach((doc) => {
-          const appData = { ...doc.data(), uid: doc.id };
-          apps.push(appData);
-        });
-        dispatch({ type: types.FETCH_APPLICANTS_SUCCESS, data: apps });
-      } else {
-        dispatch({
-          type: types.FETCH_APPLICANTS_FAIL,
-          error: { message: 'Error fetching data.' },
-        });
-      }
-    })
-    .catch((error) => {
-      dispatch({ type: types.FETCH_APPLICANTS_FAIL, error });
-    });
+  let apps = [];
+  applicationsRef.onSnapshot((snapshot) => {
+    if (snapshot) {
+      apps = [];
+      snapshot.forEach((doc) => {
+        const appData = { ...doc.data(), uid: doc.id };
+        apps.push(appData);
+      });
+      dispatch({ type: types.FETCH_APPLICANTS_SUCCESS, data: apps });
+    } else {
+      dispatch({
+        type: types.FETCH_APPLICANTS_FAIL,
+        error: { message: 'Error fetching data.' },
+      });
+    }
+  }, (error) => {
+    dispatch({ type: types.FETCH_APPLICANTS_FAIL, error });
+  });
 };
 
 export const updateQuerySearch = (searchString) => {
