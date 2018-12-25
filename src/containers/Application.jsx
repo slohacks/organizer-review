@@ -14,7 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBack from '@material-ui/icons/ArrowBack';
-import { fetchApplications, getResume } from '../actions/index';
+import { fetchApplications, getResume, updateAppStatus } from '../actions/index';
 import './Application.css';
 
 const handleUndefinedField = s => (s || 'Not stated');
@@ -27,27 +27,55 @@ const parseGradDate = (date) => {
 
   const months = ['Janurary', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const dateArr = date.split('-');
-
   return `${months[parseInt(dateArr[1], 10) - 1]} ${dateArr[0]}`;
+};
+const parseAppStatus = (status) => {
+  if (!status) return 'Undecided';
+
+  const statusEnum = ['Undecided', 'Accepted', 'Waitlisted', 'Rejected'];
+  return statusEnum[status];
 };
 
 class Application extends Component {
+  constructor(props) {
+    super(props);
+    this.acceptApp = this.acceptApp.bind(this);
+    this.waitlistApp = this.waitlistApp.bind(this);
+    this.rejectApp = this.rejectApp.bind(this);
+  }
+
   componentDidMount() {
     const {
       fetchApplications: fetchApps,
       getResume: fetchResume,
       match: { params: { uid } },
     } = this.props;
-
     fetchApps(uid);
     fetchResume(uid);
+  }
+
+  acceptApp() {
+    const { match: { params: { uid } }, updateAppStatus: uas } = this.props;
+    uas(uid, 1);
+  }
+
+  waitlistApp() {
+    const { match: { params: { uid } }, updateAppStatus: uas } = this.props;
+    uas(uid, 2);
+  }
+
+  rejectApp() {
+    const { match: { params: { uid } }, updateAppStatus: uas } = this.props;
+    uas(uid, 3);
   }
 
   render() {
     const {
       fetchingApplication,
       fetchingResume,
+      sendingStatus,
       appData,
+      appStatus,
       resumeMetadata,
       resumeUrl,
       errorApplication,
@@ -268,6 +296,48 @@ class Application extends Component {
                     </p>
                   </CardContent>
                 </Card>
+                <Card className="cardStyle">
+                  <CardContent>
+                    <h3 className="cardTitle">Application Decision</h3>
+                    <ListItem>
+                      <ListItemText primary="Status" secondary={parseAppStatus(appStatus)} />
+                    </ListItem>
+                  </CardContent>
+                  <CardActions>
+                    <div className="buttonProgressWrapper">
+                      <Button
+                        size="small"
+                        color="primary"
+                        variant={appStatus && appStatus === 1 ? 'contained' : 'text'}
+                        onClick={this.acceptApp}
+                      >
+                        Accept
+                      </Button>
+                      {sendingStatus === 1 && <CircularProgress size={24} color="primary" className="buttonProgress" />}
+                    </div>
+                    <div className="buttonProgressWrapper">
+                      <Button
+                        size="small"
+                        variant={appStatus && appStatus === 2 ? 'contained' : 'text'}
+                        onClick={this.waitlistApp}
+                      >
+                        Waitlist
+                      </Button>
+                      {sendingStatus === 2 && <CircularProgress size={24} color="inherit" className="buttonProgress" />}
+                    </div>
+                    <div className="buttonProgressWrapper">
+                      <Button
+                        size="small"
+                        color="secondary"
+                        variant={appStatus && appStatus === 3 ? 'contained' : 'text'}
+                        onClick={this.rejectApp}
+                      >
+                        Reject
+                      </Button>
+                      {sendingStatus === 3 && <CircularProgress size={24} color="secondary" className="buttonProgress" />}
+                    </div>
+                  </CardActions>
+                </Card>
               </div>
             </section>
           </div>
@@ -304,7 +374,9 @@ function mapStateToProps(state) {
   return {
     fetchingApplication: state.app.fetchingApplication,
     fetchingResume: state.app.fetchingResume,
+    sendingStatus: state.app.sendingStatus,
     appData: state.app.data,
+    appStatus: state.app.appStatus,
     resumeMetadata: state.app.resumeMetadata,
     resumeUrl: state.app.resumeUrl,
     errorApplication: state.app.errorApplication,
@@ -322,11 +394,14 @@ Application.propTypes = {
   }).isRequired,
   fetchApplications: PropTypes.func.isRequired,
   getResume: PropTypes.func.isRequired,
+  updateAppStatus: PropTypes.func.isRequired,
   appData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  appStatus: PropTypes.number,
   resumeMetadata: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   resumeUrl: PropTypes.string,
   fetchingApplication: PropTypes.bool.isRequired,
   fetchingResume: PropTypes.bool.isRequired,
+  sendingStatus: PropTypes.number.isRequired,
   errorApplication: PropTypes.bool.isRequired,
   errorApplicationMessage: PropTypes.string,
   errorResume: PropTypes.bool.isRequired,
@@ -335,6 +410,7 @@ Application.propTypes = {
 
 Application.defaultProps = {
   appData: null,
+  appStatus: null,
   resumeMetadata: null,
   resumeUrl: null,
   errorApplicationMessage: null,
@@ -343,5 +419,5 @@ Application.defaultProps = {
 
 export default connect(
   mapStateToProps,
-  { fetchApplications, getResume },
+  { fetchApplications, getResume, updateAppStatus },
 )(Application);
