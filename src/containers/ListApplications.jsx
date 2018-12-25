@@ -133,7 +133,7 @@ class ListApplications extends Component {
 
       if (fetching) {
         return (
-          <div>
+          <div className="loadingSpinnerWrapper">
             <CircularProgress />
           </div>
         );
