@@ -23,6 +23,7 @@ import {
   updateQueryButton,
   updateQueryCheck,
 } from '../actions/index';
+import './ListApplications.css';
 
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index]);
@@ -153,35 +154,37 @@ class ListApplications extends Component {
             : applications;
         }
         return (
-          <div className="sides">
-            <h1>Applications Data Loaded</h1>
-            <TextField
-              helperText="Query"
-              onChange={event => querySearch(event.target.value)}
-              value={querySearchString}
-            />
-            <InputLabel>Select a column</InputLabel>
-            <Select
-              value={queryColumnString}
-              onChange={event => queryColumn(event.target.value)}
-            >
-              <MenuItem value="name">Name</MenuItem>
-              <MenuItem value="college">College</MenuItem>
-              <MenuItem value="major">Major</MenuItem>
-              <MenuItem value="ethnicity">Ethnicity</MenuItem>
-              <MenuItem value="gender">Gender</MenuItem>
-            </Select>
-            <FormControlLabel
-              control={(
-                <Switch
-                  checked={queryCheckedBool}
-                  onChange={event => queryChecked(event.target.checked)}
-                  value="queryCheckedBool"
-                  color="primary"
-                />
-              )}
-              label="Match Query"
-            />
+          <div className="sidesTable">
+            <div className="sides">
+              <h1>Applications Data Loaded</h1>
+              <TextField
+                helperText="Query"
+                onChange={event => querySearch(event.target.value)}
+                value={querySearchString}
+              />
+              <InputLabel>Select a column</InputLabel>
+              <Select
+                value={queryColumnString}
+                onChange={event => queryColumn(event.target.value)}
+              >
+                <MenuItem value="name">Name</MenuItem>
+                <MenuItem value="college">College</MenuItem>
+                <MenuItem value="major">Major</MenuItem>
+                <MenuItem value="ethnicity">Ethnicity</MenuItem>
+                <MenuItem value="gender">Gender</MenuItem>
+              </Select>
+              <FormControlLabel
+                control={(
+                  <Switch
+                    checked={queryCheckedBool}
+                    onChange={event => queryChecked(event.target.checked)}
+                    value="queryCheckedBool"
+                    color="primary"
+                  />
+                )}
+                label="Match Query"
+              />
+            </div>
             <Paper className={classes.root}>
               <Table className={classes.table}>
                 <EnhancedTableHead
