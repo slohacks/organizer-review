@@ -165,13 +165,6 @@ class ListApplications extends Component {
     }
   }
 
-  parseAppStatus = (status) => {
-    if (!status) return 'Undecided';
-
-    const statusEnum = ['Undecided', 'Accepted', 'Waitlisted', 'Rejected'];
-    return statusEnum[status];
-  };
-
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
@@ -235,7 +228,7 @@ class ListApplications extends Component {
               <TableCell align="right">{n.ethnicity}</TableCell>
               <TableCell align="right">{n.gender}</TableCell>
               <TableCell align="right">{`${n.time.toDate().toDateString()}, ${n.time.toDate().toLocaleTimeString()}`}</TableCell>
-              <TableCell align="right">{this.parseAppStatus(n.status)}</TableCell>
+              <TableCell align="right">{n.status}</TableCell>
             </TableRow>
           );
         });
@@ -354,6 +347,7 @@ class ListApplications extends Component {
                     <MenuItem value="major" onClick={event => this.handleMenuClick(event)}>Major</MenuItem>
                     <MenuItem value="ethnicity" onClick={event => this.handleMenuClick(event)}>Ethnicity</MenuItem>
                     <MenuItem value="gender" onClick={event => this.handleMenuClick(event)}>Gender</MenuItem>
+                    <MenuItem value="status" onClick={event => this.handleMenuClick(event)}>Status</MenuItem>
                   </Menu>
                 </div>
                 {queryCheckedBool

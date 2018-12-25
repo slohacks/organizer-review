@@ -53,6 +53,13 @@ export const signout = () => (dispatch) => {
     });
 };
 
+function parseAppStatus(status) {
+  if (!status) return 'Undecided';
+
+  const statusEnum = ['Undecided', 'Accepted', 'Waitlisted', 'Rejected'];
+  return statusEnum[status];
+}
+
 export const fetchApplicants = () => (dispatch) => {
   dispatch({ type: types.FETCH_ATTEMPT });
   let apps = [];
@@ -60,7 +67,7 @@ export const fetchApplicants = () => (dispatch) => {
     if (snapshot) {
       apps = [];
       snapshot.forEach((doc) => {
-        const appData = { ...doc.data(), uid: doc.id };
+        const appData = { ...doc.data(), uid: doc.id, status: parseAppStatus(doc.data().status) };
         apps.push(appData);
       });
       dispatch({ type: types.FETCH_APPLICANTS_SUCCESS, data: apps });
