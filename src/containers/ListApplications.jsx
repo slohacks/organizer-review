@@ -53,7 +53,7 @@ class ListApplications extends Component {
     super(props);
     this.state = {
       order: 'asc',
-      orderBy: 'name',
+      orderBy: 'time',
       page: 0,
       rowsPerPage: 8,
     };
