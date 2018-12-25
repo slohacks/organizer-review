@@ -72,6 +72,8 @@ export default (state = INITIAL_STATE, action) => {
         errorStatus: true,
         errorStatusResume: action.error.message,
       };
+    case types.CLEAR_APPLICATION:
+      return INITIAL_STATE;
     default:
       return state;
   }
