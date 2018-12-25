@@ -153,7 +153,7 @@ class ListApplications extends Component {
             : applications;
         }
         return (
-          <div>
+          <div className="sides">
             <h1>Applications Data Loaded</h1>
             <TextField
               helperText="Query"
