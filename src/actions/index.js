@@ -58,7 +58,7 @@ function parseAppStatus(status) {
 
   const statusEnum = ['Undecided', 'Accepted', 'Waitlisted', 'Rejected'];
   return statusEnum[status];
-};
+}
 
 export const fetchApplicants = () => (dispatch) => {
   dispatch({ type: types.FETCH_ATTEMPT });
