@@ -165,6 +165,13 @@ class ListApplications extends Component {
     }
   }
 
+  parseAppStatus = (status) => {
+    if (!status) return 'Undecided';
+
+    const statusEnum = ['Undecided', 'Accepted', 'Waitlisted', 'Rejected'];
+    return statusEnum[status];
+  };
+
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
@@ -228,7 +235,7 @@ class ListApplications extends Component {
               <TableCell align="right">{n.ethnicity}</TableCell>
               <TableCell align="right">{n.gender}</TableCell>
               <TableCell align="right">{`${n.time.toDate().toDateString()}, ${n.time.toDate().toLocaleTimeString()}`}</TableCell>
-              <TableCell align="right">{n.status}</TableCell>
+              <TableCell align="right">{this.parseAppStatus(n.status)}</TableCell>
             </TableRow>
           );
         });
