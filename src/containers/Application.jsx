@@ -42,6 +42,7 @@ class Application extends Component {
     this.acceptApp = this.acceptApp.bind(this);
     this.waitlistApp = this.waitlistApp.bind(this);
     this.rejectApp = this.rejectApp.bind(this);
+    this.handleBackButton = this.handleBackButton.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +70,11 @@ class Application extends Component {
     uas(uid, 3);
   }
 
+  handleBackButton() {
+    const { history: { push } } = this.props;
+    push('/applications/');
+  }
+
   render() {
     const {
       fetchingApplication,
@@ -89,7 +95,7 @@ class Application extends Component {
         <div className="appBarPageWrapper">
           <AppBar position="static">
             <Toolbar>
-              <IconButton color="inherit" className="leftButton">
+              <IconButton color="inherit" onClick={this.handleBackButton} className="leftButton">
                 <ArrowBack />
               </IconButton>
               <Typography variant="h6" color="inherit" component="h1" className="grow">
@@ -109,7 +115,7 @@ class Application extends Component {
         <div>
           <AppBar position="static">
             <Toolbar>
-              <IconButton color="inherit" className="leftButton">
+              <IconButton color="inherit" onClick={this.handleBackButton} className="leftButton">
                 <ArrowBack />
               </IconButton>
               <Typography variant="h6" color="inherit" component="h1" className="grow">
@@ -349,7 +355,7 @@ class Application extends Component {
       <div className="appBarPageWrapper">
         <AppBar position="static">
           <Toolbar>
-            <IconButton color="inherit" className="leftButton">
+            <IconButton color="inherit" onClick={this.handleBackButton} className="leftButton">
               <ArrowBack />
             </IconButton>
             <Typography variant="h6" color="inherit" component="h1" className="grow">
@@ -406,6 +412,7 @@ Application.propTypes = {
   errorApplicationMessage: PropTypes.string,
   errorResume: PropTypes.bool.isRequired,
   errorResumeMessage: PropTypes.string,
+  history: PropTypes.shape().isRequired,
 };
 
 Application.defaultProps = {
