@@ -60,20 +60,17 @@ class Decision extends Component {
         </CardContent>
         <CardActions>
           <Button
-            variant="outlined"
             color="primary"
             onClick={e => this.getCSV(e)}
           >
             Accepted
           </Button>
           <Button
-            variant="outlined"
             onClick={e => this.getCSV(e)}
           >
             Waitlisted
           </Button>
           <Button
-            variant="outlined"
             color="secondary"
             onClick={e => this.getCSV(e)}
           >
