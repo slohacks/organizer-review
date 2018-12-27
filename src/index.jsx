@@ -9,6 +9,7 @@ import reducers from './reducers';
 import Application from './containers/Application';
 import ListApplications from './containers/ListApplications';
 import SignUp from './containers/SignUp';
+import Statistics from './containers/Statistics';
 import Login from './containers/Login';
 import ForgotPassword from './containers/ForgotPassword';
 import NotFound from './containers/NotFound';
@@ -31,6 +32,7 @@ ReactDOM.render(
         <Route path="/login" component={Login} />
         <Route path="/application/:uid" component={Application} />
         <Route path="/applications/" component={ListApplications} />
+        <Route path="/statistics/" component={Statistics} />
         <Route component={NotFound} />
       </Switch>
     </HashRouter>
