@@ -5,7 +5,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Decision extends Component {
   constructor(props) {
@@ -32,64 +31,35 @@ class Decision extends Component {
     link.remove();
   };
 
-  renderContext() {
-    const { applications } = this.props;
-    if (!applications) {
-      return (
-        <Card>
-          <CardContent>
-            <h3 className="cardTitle">Decisions</h3>
-          </CardContent>
-          <CardActions>
-            <Button variant="outlined" color="primary">
-              <CircularProgress />
-            </Button>
-            <Button variant="outlined">
-              <CircularProgress />
-            </Button>
-            <Button variant="outlined" color="secondary">
-              <CircularProgress />
-            </Button>
-          </CardActions>
-        </Card>
-      );
-    }
-    return (
-      <Card>
-        <CardContent>
-          <h3 className="cardTitle">Decisions</h3>
-        </CardContent>
-        <CardActions>
-          <Button
-            color="primary"
-            value="Accepted"
-            onClick={e => this.getCSV(e)}
-          >
-            Accepted
-          </Button>
-          <Button
-            value="Waitlisted"
-            onClick={e => this.getCSV(e)}
-          >
-            Waitlisted
-          </Button>
-          <Button
-            color="secondary"
-            value="Rejected"
-            onClick={e => this.getCSV(e)}
-          >
-            Rejected
-          </Button>
-        </CardActions>
-      </Card>
-    );
-  }
-
-  render() {
-    return (
-      this.renderContext()
-    );
-  }
+  render = () => (
+    <Card>
+      <CardContent>
+        <h3 className="cardTitle">Decisions</h3>
+      </CardContent>
+      <CardActions>
+        <Button
+          color="primary"
+          value="Accepted"
+          onClick={e => this.getCSV(e)}
+        >
+          Accepted
+        </Button>
+        <Button
+          value="Waitlisted"
+          onClick={e => this.getCSV(e)}
+        >
+          Waitlisted
+        </Button>
+        <Button
+          color="secondary"
+          value="Rejected"
+          onClick={e => this.getCSV(e)}
+        >
+          Rejected
+        </Button>
+      </CardActions>
+    </Card>
+  );
 }
 Decision.propTypes = {
   applications: PropTypes.arrayOf(PropTypes.shape({})),
