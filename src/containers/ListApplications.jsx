@@ -193,7 +193,7 @@ class ListApplications extends Component {
 
     handleMenuClick = (event) => {
       const { updateQueryButton: queryColumn } = this.props;
-      queryColumn(event.target.getAttribute('value'));
+      queryColumn(event.currentTarget.getAttribute('value'));
       this.setState({ anchorEl: null });
     }
 
