@@ -26,7 +26,7 @@ class Decision extends Component {
     const link = document.createElement('a');
     link.setAttribute('href', csvContent);
     link.setAttribute('download', `${status.target.innerHTML}.csv`);
-    document.body.appendChild(link); // Required for FF
+    document.body.appendChild(link);
     link.click();
     link.remove();
   };
