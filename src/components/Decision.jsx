@@ -5,6 +5,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 class Decision extends Component {
   constructor(props) {
@@ -31,35 +34,94 @@ class Decision extends Component {
     link.remove();
   };
 
-  render = () => (
-    <Card>
-      <CardContent>
-        <h3 className="cardTitle">Decisions</h3>
-      </CardContent>
-      <CardActions>
-        <Button
-          color="primary"
-          value="Accepted"
-          onClick={e => this.getCSV(e)}
-        >
-          Accepted
-        </Button>
-        <Button
-          value="Waitlisted"
-          onClick={e => this.getCSV(e)}
-        >
-          Waitlisted
-        </Button>
-        <Button
-          color="secondary"
-          value="Rejected"
-          onClick={e => this.getCSV(e)}
-        >
-          Rejected
-        </Button>
-      </CardActions>
-    </Card>
-  );
+  getStatusCounts = (applications) => {
+    const counts = {
+      accepted: 0,
+      waitlisted: 0,
+      rejected: 0,
+      undecided: 0,
+    };
+
+    applications.forEach((application) => {
+      switch (application.status) {
+        case 'Accepted':
+          counts.accepted += 1;
+          break;
+        case 'Waitlisted':
+          counts.waitlisted += 1;
+          break;
+        case 'Rejected':
+          counts.rejected += 1;
+          break;
+        default:
+          counts.undecided += 1;
+          break;
+      }
+    });
+
+    return counts;
+  }
+
+  render() {
+    const { applications } = this.props;
+    const counts = this.getStatusCounts(applications);
+
+    return (
+      <Card>
+        <CardContent>
+          <h3 className="cardTitle">Decisions</h3>
+          <List>
+            <ListItem>
+              <ListItemText
+                primary="Accepted"
+                secondary={counts.accepted}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="Waitlisted"
+                secondary={counts.waitlisted}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="Rejected"
+                secondary={counts.rejected}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="Undecided"
+                secondary={counts.undecided}
+              />
+            </ListItem>
+          </List>
+        </CardContent>
+        <CardActions>
+          <Button
+            color="primary"
+            value="Accepted"
+            onClick={e => this.getCSV(e)}
+          >
+            Accepted
+          </Button>
+          <Button
+            value="Waitlisted"
+            onClick={e => this.getCSV(e)}
+          >
+            Waitlisted
+          </Button>
+          <Button
+            color="secondary"
+            value="Rejected"
+            onClick={e => this.getCSV(e)}
+          >
+            Rejected
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
 }
 Decision.propTypes = {
   applications: PropTypes.arrayOf(PropTypes.shape({})),
