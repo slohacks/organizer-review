@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -38,18 +39,18 @@ class Decision extends Component {
         <Card>
           <CardContent>
             <h3 className="cardTitle">Decisions</h3>
-            <List>
-              <Button variant="outlined" color="primary">
-                <CircularProgress />
-              </Button>
-              <Button variant="outlined">
-                <CircularProgress />
-              </Button>
-              <Button variant="outlined" color="secondary">
-                <CircularProgress />
-              </Button>
-            </List>
           </CardContent>
+          <CardActions>
+            <Button variant="outlined" color="primary">
+              <CircularProgress />
+            </Button>
+            <Button variant="outlined">
+              <CircularProgress />
+            </Button>
+            <Button variant="outlined" color="secondary">
+              <CircularProgress />
+            </Button>
+          </CardActions>
         </Card>
       );
     }
@@ -57,29 +58,29 @@ class Decision extends Component {
       <Card>
         <CardContent>
           <h3 className="cardTitle">Decisions</h3>
-          <List>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={e => this.getCSV(e)}
-            >
-              Accepted
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={e => this.getCSV(e)}
-            >
-              Waitlisted
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={e => this.getCSV(e)}
-            >
-              Undecided
-            </Button>
-          </List>
         </CardContent>
+        <CardActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={e => this.getCSV(e)}
+          >
+            Accepted
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={e => this.getCSV(e)}
+          >
+            Waitlisted
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={e => this.getCSV(e)}
+          >
+            Rejected
+          </Button>
+        </CardActions>
       </Card>
     );
   }
