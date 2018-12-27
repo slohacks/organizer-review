@@ -11,17 +11,24 @@ class Decision extends Component {
   constructor(props) {
     super(props);
     this.getCSV = this.getCSV.bind(this);
-  };
+  }
 
   getCSV = (status) => {
     const { applications } = this.props;
-    let csvContent = 'data:text/csv;charset=utf-8, ';
+    let csvContent = 'data:text/csv;charset=utf-8,Email Address,First Name,Last Name\r\n';
+
     applications.forEach((application) => {
       if (application.status === status.target.innerHTML) {
         csvContent += `${application.email},${application.name.split(' ')[0]},${application.name.split(' ')[1]}\r\n`;
       }
     });
-    window.open(encodeURI(csvContent));
+    csvContent = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', csvContent);
+    link.setAttribute('download', `${status.target.innerHTML}.csv`);
+    document.body.appendChild(link); // Required for FF
+    link.click();
+    link.remove();
   };
 
   renderContext() {
@@ -54,25 +61,22 @@ class Decision extends Component {
             <Button
               variant="outlined"
               color="primary"
-              value="Accepted"
               onClick={e => this.getCSV(e)}
             >
               Accepted
             </Button>
             <Button
               variant="outlined"
-              value="Waitlisted"
               onClick={e => this.getCSV(e)}
             >
-              Waitlist
+              Waitlisted
             </Button>
             <Button
               variant="outlined"
               color="secondary"
-              value="Rejected"
               onClick={e => this.getCSV(e)}
             >
-              Rejected
+              Undecided
             </Button>
           </List>
         </CardContent>
