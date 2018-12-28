@@ -80,9 +80,10 @@ class Decision extends Component {
           <h3 className="cardTitle">Decisions</h3>
           <List>
             {counts.map(count => (
-              <ListItem>
+              <ListItem
+                key={count.status}
+              >
                 <ListItemText
-                  key={count.status}
                   primary={count.status}
                   secondary={count.count}
                 />
