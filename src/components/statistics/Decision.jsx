@@ -75,7 +75,7 @@ class Decision extends Component {
     const counts = this.getStatusCounts(applications);
 
     return (
-      <Card>
+      <Card className="cardStyle">
         <CardContent>
           <h3 className="cardTitle">Decisions</h3>
           <List>
