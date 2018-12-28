@@ -12,10 +12,46 @@ import ListItemText from '@material-ui/core/ListItemText';
 class Decision extends Component {
   constructor(props) {
     super(props);
+
     this.getCSV = this.getCSV.bind(this);
+    this.getEmailCSV = this.getEmailCSV.bind(this);
   }
 
-  getCSV = (event) => {
+  getStatusCounts = (applications) => {
+    const counts = [];
+
+    applications.forEach((application) => {
+      const count = counts.find(el => el.status === application.status);
+
+      if (count !== undefined) {
+        count.count += 1;
+      } else {
+        counts.push({ status: application.status, count: 1 });
+      }
+    });
+
+    return counts.sort((a, b) => b.count - a.count);
+  }
+
+  getCSV = () => {
+    const { applications } = this.props;
+    const counts = this.getStatusCounts(applications);
+    let csvContent = 'data:text/csv;charset=utf-8,Status,Count\r\n';
+
+    counts.forEach((count) => {
+      csvContent += `${count.status},${count.count}\r\n`;
+    });
+
+    csvContent = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', csvContent);
+    link.setAttribute('download', 'Decisions.csv');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
+  getEmailCSV = (event) => {
     const { applications } = this.props;
     let csvContent = 'data:text/csv;charset=utf-8,Email Address,First Name,Last Name\r\n';
 
@@ -34,34 +70,6 @@ class Decision extends Component {
     link.remove();
   };
 
-  getStatusCounts = (applications) => {
-    const counts = {
-      accepted: 0,
-      waitlisted: 0,
-      rejected: 0,
-      undecided: 0,
-    };
-
-    applications.forEach((application) => {
-      switch (application.status) {
-        case 'Accepted':
-          counts.accepted += 1;
-          break;
-        case 'Waitlisted':
-          counts.waitlisted += 1;
-          break;
-        case 'Rejected':
-          counts.rejected += 1;
-          break;
-        default:
-          counts.undecided += 1;
-          break;
-      }
-    });
-
-    return counts;
-  }
-
   render() {
     const { applications } = this.props;
     const counts = this.getStatusCounts(applications);
@@ -71,52 +79,41 @@ class Decision extends Component {
         <CardContent>
           <h3 className="cardTitle">Decisions</h3>
           <List>
-            <ListItem>
-              <ListItemText
-                primary="Accepted"
-                secondary={counts.accepted}
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary="Waitlisted"
-                secondary={counts.waitlisted}
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary="Rejected"
-                secondary={counts.rejected}
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary="Undecided"
-                secondary={counts.undecided}
-              />
-            </ListItem>
+            {counts.map(count => (
+              <ListItem>
+                <ListItemText
+                  key={count.status}
+                  primary={count.status}
+                  secondary={count.count}
+                />
+              </ListItem>
+            ))}
           </List>
         </CardContent>
         <CardActions>
           <Button
             color="primary"
-            value="Accepted"
-            onClick={e => this.getCSV(e)}
+            onClick={this.getCSV}
           >
-            Accepted
+            Get CSV
+          </Button>
+          <Button
+            value="Accepted"
+            onClick={e => this.getEmailCSV(e)}
+          >
+            Accepted CSV
           </Button>
           <Button
             value="Waitlisted"
-            onClick={e => this.getCSV(e)}
+            onClick={e => this.getEmailCSV(e)}
           >
-            Waitlisted
+            Waitlisted CSV
           </Button>
           <Button
-            color="secondary"
             value="Rejected"
-            onClick={e => this.getCSV(e)}
+            onClick={e => this.getEmailCSV(e)}
           >
-            Rejected
+            Rejected CSV
           </Button>
         </CardActions>
       </Card>
