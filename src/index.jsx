@@ -11,6 +11,7 @@ import ListApplications from './containers/ListApplications';
 import SignUp from './containers/SignUp';
 import Login from './containers/Login';
 import ForgotPassword from './containers/ForgotPassword';
+import Statistics from './containers/Statistics';
 import NotFound from './containers/NotFound';
 
 import './index.css';
@@ -31,6 +32,7 @@ ReactDOM.render(
         <Route path="/login" component={Login} />
         <Route path="/application/:uid" component={Application} />
         <Route path="/applications/" component={ListApplications} />
+        <Route path="/statistics" component={Statistics} />
         <Route component={NotFound} />
       </Switch>
     </HashRouter>
