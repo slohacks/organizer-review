@@ -40,7 +40,7 @@ self.__precacheManifest = [
     "url": "./static/media/hills.3cdcf8b5.png"
   },
   {
-    "revision": "21597a5bdf174dd03fc9767452259fd9",
+    "revision": "24c999d0373e104775fd66d1e6123555",
     "url": "./index.html"
   }
 ];
