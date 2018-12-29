@@ -75,7 +75,13 @@ class DecisionCard extends Component {
     const counts = this.getStatusCounts(applications);
 
     return (
-      <Card className="cardStyle">
+      <Card
+        className="cardStyle"
+        style={{
+          width: '100%',
+          maxWidth: '100%',
+        }}
+      >
         <CardContent>
           <h3 className="cardTitle">Decisions</h3>
           <List>
