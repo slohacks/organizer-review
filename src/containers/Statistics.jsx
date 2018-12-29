@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import requireAuth from '../components/requireAuth';
 import Decision from '../components/statistics/Decision';
-import Statistic from '../components/statistics/Statistic';
+import CountCard from '../components/statistics/CountCard';
 import './Statistics.css';
 
 const Statistics = () => {
@@ -20,10 +20,10 @@ const Statistics = () => {
       <div className="sides">
         <section className="stats">
           <div className="rowStyle">
-            <Statistic name="college" />
-            <Statistic name="major" />
-            <Statistic name="ethnicity" />
-            <Statistic name="gender" />
+            <CountCard name="college" />
+            <CountCard name="major" />
+            <CountCard name="ethnicity" />
+            <CountCard name="gender" />
             <Decision />
           </div>
         </section>

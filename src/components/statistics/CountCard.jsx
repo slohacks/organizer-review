@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-class Statistic extends Component {
+class CountCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -129,11 +129,11 @@ class Statistic extends Component {
     );
   }
 }
-Statistic.propTypes = {
+CountCard.propTypes = {
   applications: PropTypes.arrayOf(PropTypes.shape({})),
   name: PropTypes.string.isRequired,
 };
-Statistic.defaultProps = {
+CountCard.defaultProps = {
   applications: [],
 };
 function mapStateToProps(state) {
@@ -144,4 +144,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   null,
-)(Statistic);
+)(CountCard);
