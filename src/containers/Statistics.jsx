@@ -4,10 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import requireAuth from '../components/requireAuth';
 import Decision from '../components/statistics/Decision';
-import Majors from '../components/statistics/Majors';
-import Colleges from '../components/statistics/Colleges';
-import Gender from '../components/statistics/Gender';
-import Ethnicity from '../components/statistics/Ethnicity';
+import Statistic from '../components/statistics/Statistic';
 import './Statistics.css';
 
 const Statistics = () => {
@@ -23,10 +20,10 @@ const Statistics = () => {
       <div className="sides">
         <section className="stats">
           <div className="rowStyle">
-            <Colleges />
-            <Majors />
-            <Ethnicity />
-            <Gender />
+            <Statistic name="college" />
+            <Statistic name="major" />
+            <Statistic name="ethnicity" />
+            <Statistic name="gender" />
             <Decision />
           </div>
         </section>

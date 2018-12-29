@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-class Colleges extends Component {
+class Statistic extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,14 +38,15 @@ class Colleges extends Component {
 
   getCollegeCounts = (applications) => {
     const counts = [];
+    const { name } = this.props;
 
     applications.forEach((application) => {
-      const count = counts.find(el => el.college === application.college);
+      const count = counts.find(el => el[name] === application[name]);
 
       if (count !== undefined) {
         count.count += 1;
       } else {
-        counts.push({ college: application.college, count: 1 });
+        counts.push({ [name]: application[name], count: 1 });
       }
     });
 
@@ -53,39 +54,41 @@ class Colleges extends Component {
   }
 
   getCSV = () => {
-    const { applications } = this.props;
+    const { applications, name } = this.props;
     const counts = this.getCollegeCounts(applications);
     let csvContent = 'data:text/csv;charset=utf-8,Status,Count\r\n';
 
     counts.forEach((count) => {
-      csvContent += `${count.college.replace(/,/g, '-').trim()},${count.count}\r\n`;
+      csvContent += `${count[name].replace(/,/g, '-').trim()},${count.count}\r\n`;
     });
 
     csvContent = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', csvContent);
-    link.setAttribute('download', 'Colleges.csv');
+    link.setAttribute('download', `${name}.csv`);
     document.body.appendChild(link);
     link.click();
     link.remove();
   }
 
   render() {
-    const { applications } = this.props;
+    const { applications, name } = this.props;
     const { expanded } = this.state;
     const counts = this.getCollegeCounts(applications);
+    const heading = name.charAt(name.length - 1) === 'y' ? name.replace(name.charAt(name.length - 1), 'ie') : name;
+    const header = `${heading.replace(heading.charAt(0), heading.charAt(0).toUpperCase())}s`;
 
     return (
       <Card className="cardStyle">
         <CardContent>
-          <h3 className="cardTitle">Colleges</h3>
+          <h3 className="cardTitle">{header}</h3>
           <List>
             {counts.slice(0, 4).map(count => (
               <ListItem
-                key={count.college}
+                key={count[name]}
               >
                 <ListItemText
-                  primary={count.college}
+                  primary={count[name]}
                   secondary={count.count}
                 />
               </ListItem>
@@ -97,10 +100,10 @@ class Colleges extends Component {
             >
               {counts.slice(4).map(count => (
                 <ListItem
-                  key={count.college}
+                  key={count[name]}
                 >
                   <ListItemText
-                    primary={count.college}
+                    primary={count[name]}
                     secondary={count.count}
                   />
                 </ListItem>
@@ -126,10 +129,11 @@ class Colleges extends Component {
     );
   }
 }
-Colleges.propTypes = {
+Statistic.propTypes = {
   applications: PropTypes.arrayOf(PropTypes.shape({})),
+  name: PropTypes.string.isRequired,
 };
-Colleges.defaultProps = {
+Statistic.defaultProps = {
   applications: [],
 };
 function mapStateToProps(state) {
@@ -140,4 +144,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   null,
-)(Colleges);
+)(Statistic);
