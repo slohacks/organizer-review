@@ -71,6 +71,8 @@ class CountCard extends Component {
     link.remove();
   }
 
+  getPlural = (s) => { return s.charAt(s.length - 1) === 'y' ? `${s.substring(0, s.length - 1)}ies` : `${s}s`; };
+
   render() {
     const { applications, applicationField } = this.props;
     const { expanded } = this.state;
@@ -93,6 +95,13 @@ class CountCard extends Component {
                 />
               </ListItem>
             ))}
+            {!expanded && counts.length > 4 && (
+              <ListItem>
+                <ListItemText
+                  secondary={`and ${counts.length - 1} more ${this.getPlural(applicationField)}...`}
+                />
+              </ListItem>
+            )}
             <Collapse
               in={expanded}
               timeout="auto"
