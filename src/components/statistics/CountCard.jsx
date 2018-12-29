@@ -118,12 +118,14 @@ class CountCard extends Component {
           >
             Get CSV
           </Button>
-          <IconButton
-            style={expanded ? styles.expand : styles.expandOpen}
-            onClick={this.handleExpansion}
-          >
-            <ExpandMoreIcon />
-          </IconButton>
+          {counts.length > 4 && (
+            <IconButton
+              style={expanded ? styles.expand : styles.expandOpen}
+              onClick={this.handleExpansion}
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          )}
         </CardActions>
       </Card>
     );
