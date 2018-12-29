@@ -14,10 +14,10 @@ import Collapse from '@material-ui/core/Collapse';
 
 const styles = {
   expand: {
-    transform: 'rotate(0deg)',
+    transform: 'rotate(180deg)',
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(0deg)',
   },
 };
 
