@@ -9,7 +9,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-class Decision extends Component {
+class DecisionCard extends Component {
   constructor(props) {
     super(props);
 
@@ -121,10 +121,10 @@ class Decision extends Component {
     );
   }
 }
-Decision.propTypes = {
+DecisionCard.propTypes = {
   applications: PropTypes.arrayOf(PropTypes.shape({})),
 };
-Decision.defaultProps = {
+DecisionCard.defaultProps = {
   applications: [],
 };
 function mapStateToProps(state) {
@@ -135,4 +135,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   null,
-)(Decision);
+)(DecisionCard);

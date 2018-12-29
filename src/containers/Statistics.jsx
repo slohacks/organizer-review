@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import requireAuth from '../components/requireAuth';
-import Decision from '../components/statistics/Decision';
+import DecisionCard from '../components/statistics/DecisionCard';
 import CountCard from '../components/statistics/CountCard';
 import './Statistics.css';
 
@@ -24,7 +24,7 @@ const Statistics = () => {
             <CountCard applicationField="major" />
             <CountCard applicationField="ethnicity" />
             <CountCard applicationField="gender" />
-            <Decision />
+            <DecisionCard />
           </div>
         </section>
       </div>
