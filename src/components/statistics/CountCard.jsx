@@ -38,15 +38,15 @@ class CountCard extends Component {
 
   getCollegeCounts = (applications) => {
     const counts = [];
-    const { name } = this.props;
+    const { applicationField } = this.props;
 
     applications.forEach((application) => {
-      const count = counts.find(el => el[name] === application[name]);
+      const count = counts.find(el => el[applicationField] === application[applicationField]);
 
       if (count !== undefined) {
         count.count += 1;
       } else {
-        counts.push({ [name]: application[name], count: 1 });
+        counts.push({ [applicationField]: application[applicationField], count: 1 });
       }
     });
 
@@ -54,28 +54,28 @@ class CountCard extends Component {
   }
 
   getCSV = () => {
-    const { applications, name } = this.props;
+    const { applications, applicationField } = this.props;
     const counts = this.getCollegeCounts(applications);
     let csvContent = 'data:text/csv;charset=utf-8,Status,Count\r\n';
 
     counts.forEach((count) => {
-      csvContent += `${count[name].replace(/,/g, '-').trim()},${count.count}\r\n`;
+      csvContent += `${count[applicationField].replace(/,/g, '-').trim()},${count.count}\r\n`;
     });
 
     csvContent = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', csvContent);
-    link.setAttribute('download', `${name}.csv`);
+    link.setAttribute('download', `${applicationField}.csv`);
     document.body.appendChild(link);
     link.click();
     link.remove();
   }
 
   render() {
-    const { applications, name } = this.props;
+    const { applications, applicationField } = this.props;
     const { expanded } = this.state;
     const counts = this.getCollegeCounts(applications);
-    const heading = name.charAt(name.length - 1) === 'y' ? name.replace(name.charAt(name.length - 1), 'ie') : name;
+    const heading = applicationField.charAt(applicationField.length - 1) === 'y' ? applicationField.replace(applicationField.charAt(applicationField.length - 1), 'ie') : applicationField;
     const header = `${heading.replace(heading.charAt(0), heading.charAt(0).toUpperCase())}s`;
 
     return (
@@ -85,10 +85,10 @@ class CountCard extends Component {
           <List>
             {counts.slice(0, 4).map(count => (
               <ListItem
-                key={count[name]}
+                key={count[applicationField]}
               >
                 <ListItemText
-                  primary={count[name]}
+                  primary={count[applicationField]}
                   secondary={count.count}
                 />
               </ListItem>
@@ -100,10 +100,10 @@ class CountCard extends Component {
             >
               {counts.slice(4).map(count => (
                 <ListItem
-                  key={count[name]}
+                  key={count[applicationField]}
                 >
                   <ListItemText
-                    primary={count[name]}
+                    primary={count[applicationField]}
                     secondary={count.count}
                   />
                 </ListItem>
@@ -131,7 +131,7 @@ class CountCard extends Component {
 }
 CountCard.propTypes = {
   applications: PropTypes.arrayOf(PropTypes.shape({})),
-  name: PropTypes.string.isRequired,
+  applicationField: PropTypes.string.isRequired,
 };
 CountCard.defaultProps = {
   applications: [],

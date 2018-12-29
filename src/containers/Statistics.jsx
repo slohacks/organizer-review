@@ -20,10 +20,10 @@ const Statistics = () => {
       <div className="sides">
         <section className="stats">
           <div className="rowStyle">
-            <CountCard name="college" />
-            <CountCard name="major" />
-            <CountCard name="ethnicity" />
-            <CountCard name="gender" />
+            <CountCard applicationField="college" />
+            <CountCard applicationField="major" />
+            <CountCard applicationField="ethnicity" />
+            <CountCard applicationField="gender" />
             <Decision />
           </div>
         </section>
