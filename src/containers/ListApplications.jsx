@@ -22,6 +22,7 @@ import ToggleOn from '@material-ui/icons/ToggleOn';
 import Tooltip from '@material-ui/core/Tooltip';
 import List from '@material-ui/icons/List';
 import Menu from '@material-ui/core/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
 import EnhancedTableHead from './EnhancedTableHead';
 import requireAuth from '../components/requireAuth';
 import {
@@ -151,11 +152,14 @@ class ListApplications extends Component {
       orderBy: 'time',
       page: 0,
       rowsPerPage: 4,
-      anchorEl: null,
+      menuAnchorEl: null,
+      navAnchorEl: null,
     };
+
     this.queryCheckedFalse = this.queryCheckedFalse.bind(this);
     this.queryCheckedTrue = this.queryCheckedTrue.bind(this);
     this.handleMenuClick = this.handleMenuClick.bind(this);
+    this.handleNavClick = this.handleNavClick.bind(this);
   }
 
   componentDidMount() {
@@ -184,17 +188,31 @@ class ListApplications extends Component {
     };
 
     handleMenu = (event) => {
-      this.setState({ anchorEl: event.currentTarget });
+      this.setState({ menuAnchorEl: event.currentTarget });
     };
 
-    handleCloseMenu = () => {
-      this.setState({ anchorEl: null });
+    handleMenuClose = () => {
+      this.setState({ menuAnchorEl: null });
     };
 
     handleMenuClick = (event) => {
       const { updateQueryButton: queryColumn } = this.props;
       queryColumn(event.currentTarget.getAttribute('value'));
-      this.setState({ anchorEl: null });
+      this.setState({ menuAnchorEl: null });
+    }
+
+    handleNav = (event) => {
+      this.setState({ navAnchorEl: event.currentTarget });
+    };
+
+    handleNavClose = () => {
+      this.setState({ navAnchorEl: null });
+    };
+
+    handleNavClick = (event) => {
+      const { history: { push } } = this.props;
+      push(`/${event.currentTarget.getAttribute('value')}/`);
+      this.handleNavClose();
     }
 
     queryCheckedTrue() {
@@ -250,10 +268,12 @@ class ListApplications extends Component {
         orderBy,
         rowsPerPage,
         page,
-        anchorEl,
+        menuAnchorEl,
+        navAnchorEl,
       } = this.state;
 
-      const menuOpen = Boolean(anchorEl);
+      const menuOpen = Boolean(menuAnchorEl);
+      const navOpen = Boolean(navAnchorEl);
 
       if (fetching) {
         return (
@@ -295,6 +315,34 @@ class ListApplications extends Component {
           <div>
             <AppBar position="static">
               <Toolbar>
+                <Tooltip title="Navigation">
+                  <IconButton
+                    aria-owns={navOpen ? 'appbar-nav' : undefined}
+                    aria-haspopup="true"
+                    onClick={this.handleNav}
+                    color="inherit"
+                    className="leftButton"
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  id="appbar-nav"
+                  anchorEl={navAnchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={navOpen}
+                  onClose={this.handleNavClose}
+                >
+                  <MenuItem value="applications" onClick={event => this.handleNavClick(event)}>Applications</MenuItem>
+                  <MenuItem value="statistics" onClick={event => this.handleNavClick(event)}>Statistics</MenuItem>
+                </Menu>
                 <Typography
                   variant="h6"
                   color="inherit"
@@ -320,7 +368,7 @@ class ListApplications extends Component {
                 <div>
                   <Tooltip title="Choose column">
                     <IconButton
-                      aria-owns={menuOpen ? 'menu-appbar' : undefined}
+                      aria-owns={menuOpen ? 'appbar-filter' : undefined}
                       aria-haspopup="true"
                       onClick={this.handleMenu}
                       color="inherit"
@@ -329,8 +377,8 @@ class ListApplications extends Component {
                     </IconButton>
                   </Tooltip>
                   <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
+                    id="appbar-filter"
+                    anchorEl={menuAnchorEl}
                     anchorOrigin={{
                       vertical: 'top',
                       horizontal: 'right',
@@ -340,7 +388,7 @@ class ListApplications extends Component {
                       horizontal: 'right',
                     }}
                     open={menuOpen}
-                    onClose={this.handleCloseMenu}
+                    onClose={this.handleMenuClose}
                   >
                     <MenuItem value="name" onClick={event => this.handleMenuClick(event)}>Name</MenuItem>
                     <MenuItem value="college" onClick={event => this.handleMenuClick(event)}>College</MenuItem>
