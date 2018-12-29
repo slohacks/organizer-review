@@ -36,7 +36,7 @@ class CountCard extends Component {
     this.setState(({ expanded: !expanded }));
   }
 
-  getCollegeCounts = (applications) => {
+  getCounts = (applications) => {
     const counts = [];
     const { applicationField } = this.props;
 
@@ -55,7 +55,7 @@ class CountCard extends Component {
 
   getCSV = () => {
     const { applications, applicationField } = this.props;
-    const counts = this.getCollegeCounts(applications);
+    const counts = this.getCounts(applications);
     let csvContent = 'data:text/csv;charset=utf-8,Status,Count\r\n';
 
     counts.forEach((count) => {
@@ -74,7 +74,7 @@ class CountCard extends Component {
   render() {
     const { applications, applicationField } = this.props;
     const { expanded } = this.state;
-    const counts = this.getCollegeCounts(applications);
+    const counts = this.getCounts(applications);
     const heading = applicationField.charAt(applicationField.length - 1) === 'y' ? applicationField.replace(applicationField.charAt(applicationField.length - 1), 'ie') : applicationField;
     const header = `${heading.replace(heading.charAt(0), heading.charAt(0).toUpperCase())}s`;
 
