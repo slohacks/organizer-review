@@ -32,8 +32,17 @@ const parseGradDate = (date) => {
   if (date === undefined) return handleUndefinedField(date);
 
   const months = ['Janurary', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const dateArr = date.split('-');
-  return `${months[parseInt(dateArr[1], 10) - 1]} ${dateArr[0]}`;
+
+  if (date.indexOf('-') !== -1) {
+    const dateArr = date.split('-');
+    return `${months[parseInt(dateArr[1], 10) - 1]} ${dateArr[0]}`;
+  }
+
+  if (date.indexOf('/') !== -1) {
+    const dateArr = date.split('/');
+    return `${months[parseInt(dateArr[0], 10) - 1]} ${dateArr[2]}`;
+  }
+  return date;
 };
 const parseAppStatus = (status) => {
   if (!status) return 'Undecided';
