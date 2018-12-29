@@ -11,15 +11,30 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
+import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
+const styles = theme => ({
   expand: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+    marginLeft: 'auto',
+    [theme.breakpoints.up('sm')]: {
+      marginRight: -8,
+    },
   },
   expandOpen: {
-    transform: 'rotate(0deg)',
+    transform: 'rotate(180deg)',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+    marginLeft: 'auto',
+    [theme.breakpoints.up('sm')]: {
+      marginRight: -8,
+    },
   },
-};
+});
 
 class CountCard extends Component {
   constructor(props) {
@@ -74,7 +89,7 @@ class CountCard extends Component {
   getPlural = (s) => { return s.charAt(s.length - 1) === 'y' ? `${s.substring(0, s.length - 1)}ies` : `${s}s`; };
 
   render() {
-    const { applications, applicationField } = this.props;
+    const { applications, applicationField, classes } = this.props;
     const { expanded } = this.state;
     const counts = this.getCounts(applications);
     const header = this.getPlural(applicationField).replace(/\b\w/g, l => l.toUpperCase());
@@ -119,7 +134,7 @@ class CountCard extends Component {
             </Collapse>
           </List>
         </CardContent>
-        <CardActions>
+        <CardActions disableActionSpacing>
           <Button
             color="primary"
             onClick={this.getCSV}
@@ -128,7 +143,7 @@ class CountCard extends Component {
           </Button>
           {counts.length > 4 && (
             <IconButton
-              style={expanded ? styles.expand : styles.expandOpen}
+              className={expanded ? classes.expandOpen : classes.expand}
               onClick={this.handleExpansion}
             >
               <ExpandMoreIcon />
@@ -139,19 +154,24 @@ class CountCard extends Component {
     );
   }
 }
+
 CountCard.propTypes = {
   applications: PropTypes.arrayOf(PropTypes.shape({})),
   applicationField: PropTypes.string.isRequired,
+  classes: PropTypes.shape().isRequired,
 };
+
 CountCard.defaultProps = {
   applications: [],
 };
+
 function mapStateToProps(state) {
   return {
     applications: state.apps.data,
   };
 }
+
 export default connect(
   mapStateToProps,
   null,
-)(CountCard);
+)(withStyles(styles)(CountCard));
