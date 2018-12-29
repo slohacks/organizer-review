@@ -77,8 +77,7 @@ class CountCard extends Component {
     const { applications, applicationField } = this.props;
     const { expanded } = this.state;
     const counts = this.getCounts(applications);
-    const heading = applicationField.charAt(applicationField.length - 1) === 'y' ? applicationField.replace(applicationField.charAt(applicationField.length - 1), 'ie') : applicationField;
-    const header = `${heading.replace(heading.charAt(0), heading.charAt(0).toUpperCase())}s`;
+    const header = this.getPlural(applicationField).replace(/\b\w/g, l => l.toUpperCase());
 
     return (
       <Card className="cardStyle">
