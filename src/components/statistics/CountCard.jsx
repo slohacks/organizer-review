@@ -112,7 +112,10 @@ class CountCard extends Component {
             {!expanded && counts.length > 4 && (
               <ListItem>
                 <ListItemText
-                  secondary={`and ${counts.length - 1} more ${this.getPlural(applicationField)}...`}
+                  secondary={counts.length - 4 === 1
+                    ? `and 1 more ${applicationField}...`
+                    : `and ${counts.length - 4} more ${this.getPlural(applicationField)}...`
+                  }
                 />
               </ListItem>
             )}
