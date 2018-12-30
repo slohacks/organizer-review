@@ -1,15 +1,10 @@
 import * as types from '../actions/types';
 
 const INITIAL_STATE = {
-  fetchingApplication: true,
   fetchingResume: true,
   sendingStatus: 0,
-  data: null,
-  appStatus: null,
   resumeMetadata: null,
   resumeUrl: null,
-  errorApplication: false,
-  errorApplicationMessage: '',
   errorResume: false,
   errorResumeMessage: '',
   errorStatus: false,
@@ -18,22 +13,6 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case types.FETCH_GUCCI:
-      return {
-        ...state,
-        data: action.data,
-        appStatus: action.data.status,
-        fetchingApplication: false,
-        errorApplication: false,
-        errorApplicationMessage: '',
-      };
-    case types.FETCH_FAIL:
-      return {
-        ...state,
-        errorApplication: true,
-        errorApplicationMessage: action.error.message,
-        fetchingApplication: false,
-      };
     case types.RESUME_GUCCI:
       return {
         ...state,
@@ -60,7 +39,6 @@ export default (state = INITIAL_STATE, action) => {
     case types.STATUS_GUCCI:
       return {
         ...state,
-        appStatus: action.status,
         sendingStatus: 0,
         errorStatus: false,
         errorStatusResume: '',

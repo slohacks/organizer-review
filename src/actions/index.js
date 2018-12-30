@@ -103,25 +103,6 @@ export const updateQueryCheck = (checked) => {
   };
 };
 
-export const fetchApplications = uid => (dispatch) => {
-  dispatch({ type: types.FETCH_ATTEMPT });
-  applicationsRef.doc(uid).get()
-    .then((application) => {
-      if (application.exists) {
-        const applicationData = application.data();
-        dispatch({ type: types.FETCH_GUCCI, data: applicationData });
-      } else {
-        dispatch({
-          type: types.FETCH_FAIL,
-          error: { message: 'Application does not exist.' },
-        });
-      }
-    })
-    .catch((error) => {
-      dispatch({ type: types.FETCH_FAIL, error });
-    });
-};
-
 export const getResume = uid => (dispatch) => {
   dispatch({ type: types.RESUME_ATTEMPT });
   firebase.storage().ref().child(`resumes/${uid}.pdf`).getMetadata()
