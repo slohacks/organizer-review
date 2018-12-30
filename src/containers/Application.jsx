@@ -18,7 +18,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import requireAuth from '../components/requireAuth';
 import {
-  fetchApplications,
   getResume,
   updateAppStatus,
   clearApplication,
@@ -47,12 +46,6 @@ const parseGradDate = (date) => {
   }
   return date;
 };
-const parseAppStatus = (status) => {
-  if (!status) return 'Undecided';
-
-  const statusEnum = ['Undecided', 'Accepted', 'Waitlisted', 'Rejected'];
-  return statusEnum[status];
-};
 
 class Application extends Component {
   constructor(props) {
@@ -66,11 +59,10 @@ class Application extends Component {
 
   componentDidMount() {
     const {
-      fetchApplications: fetchApps,
       getResume: fetchResume,
       match: { params: { uid } },
     } = this.props;
-    fetchApps(uid);
+
     fetchResume(uid);
   }
 
@@ -106,20 +98,19 @@ class Application extends Component {
 
   render() {
     const {
-      fetchingApplication,
       fetchingResume,
       sendingStatus,
-      appData,
-      appStatus,
+      match: { params: { uid } },
+      applications,
       resumeMetadata,
       resumeUrl,
-      errorApplication,
-      errorApplicationMessage,
       errorResume,
       errorResumeMessage,
     } = this.props;
 
-    if (fetchingApplication || fetchingResume) {
+    const appData = applications.find(app => app.uid === uid);
+
+    if (fetchingResume) {
       return (
         <div className="appBarPageWrapper">
           <AppBar position="static">
@@ -139,7 +130,7 @@ class Application extends Component {
       );
     }
 
-    if (appData && (!errorApplication || !errorResume)) {
+    if (appData && !errorResume) {
       return (
         <div>
           <AppBar position="static">
@@ -343,7 +334,7 @@ class Application extends Component {
                   <CardContent>
                     <h3 className="cardTitle">Application Decision</h3>
                     <ListItem>
-                      <ListItemText primary="Status" secondary={parseAppStatus(appStatus)} />
+                      <ListItemText primary="Status" secondary={appData.status} />
                     </ListItem>
                   </CardContent>
                   <CardActions>
@@ -351,7 +342,7 @@ class Application extends Component {
                       <Button
                         size="small"
                         color="primary"
-                        variant={appStatus && appStatus === 1 ? 'contained' : 'text'}
+                        variant={appData.status === 'Accepted' ? 'contained' : 'text'}
                         onClick={this.acceptApp}
                       >
                         Accept
@@ -361,7 +352,7 @@ class Application extends Component {
                     <div className="buttonProgressWrapper">
                       <Button
                         size="small"
-                        variant={appStatus && appStatus === 2 ? 'contained' : 'text'}
+                        variant={appData.status === 'Waitlisted' ? 'contained' : 'text'}
                         onClick={this.waitlistApp}
                       >
                         Waitlist
@@ -372,7 +363,7 @@ class Application extends Component {
                       <Button
                         size="small"
                         color="secondary"
-                        variant={appStatus && appStatus === 3 ? 'contained' : 'text'}
+                        variant={appData.status === 'Rejected' ? 'contained' : 'text'}
                         onClick={this.rejectApp}
                       >
                         Reject
@@ -401,8 +392,8 @@ class Application extends Component {
           </Toolbar>
         </AppBar>
         <div className="sides">
-          {errorApplication
-            ? <p>{errorApplicationMessage}</p>
+          {appData
+            ? <p>Application not found.</p>
             : ''}
           {errorResume
             ? <p>{errorResumeMessage}</p>
@@ -415,16 +406,12 @@ class Application extends Component {
 
 function mapStateToProps(state) {
   return {
-    fetchingApplication: state.app.fetchingApplication,
     fetchingResume: state.app.fetchingResume,
     sendingStatus: state.app.sendingStatus,
-    appData: state.app.data,
-    appStatus: state.app.appStatus,
+    applications: state.apps.data,
     resumeMetadata: state.app.resumeMetadata,
     resumeUrl: state.app.resumeUrl,
-    errorApplication: state.app.errorApplication,
     errorResume: state.app.errorResume,
-    errorApplicationMessage: state.app.errorApplicationMessage,
     errorResumeMessage: state.app.errorResumeMessage,
   };
 }
@@ -435,38 +422,30 @@ Application.propTypes = {
       id: PropTypes.string,
     }),
   }).isRequired,
-  fetchApplications: PropTypes.func.isRequired,
+  applications: PropTypes.arrayOf(PropTypes.shape({})),
   clearApplication: PropTypes.func.isRequired,
   getResume: PropTypes.func.isRequired,
   updateAppStatus: PropTypes.func.isRequired,
   signout: PropTypes.func.isRequired,
-  appData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  appStatus: PropTypes.number,
   resumeMetadata: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   resumeUrl: PropTypes.string,
-  fetchingApplication: PropTypes.bool.isRequired,
   fetchingResume: PropTypes.bool.isRequired,
   sendingStatus: PropTypes.number.isRequired,
-  errorApplication: PropTypes.bool.isRequired,
-  errorApplicationMessage: PropTypes.string,
   errorResume: PropTypes.bool.isRequired,
   errorResumeMessage: PropTypes.string,
   history: PropTypes.shape().isRequired,
 };
 
 Application.defaultProps = {
-  appData: null,
-  appStatus: null,
+  applications: null,
   resumeMetadata: null,
   resumeUrl: null,
-  errorApplicationMessage: null,
   errorResumeMessage: null,
 };
 
 export default connect(
   mapStateToProps,
   {
-    fetchApplications,
     getResume,
     updateAppStatus,
     clearApplication,
