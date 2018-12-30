@@ -89,10 +89,15 @@ class CountCard extends Component {
   getPlural = (s) => { return s.charAt(s.length - 1) === 'y' ? `${s.substring(0, s.length - 1)}ies` : `${s}s`; };
 
   render() {
-    const { applications, applicationField, classes } = this.props;
+    const {
+      applications,
+      applicationField,
+      classes,
+      displayName,
+    } = this.props;
     const { expanded } = this.state;
     const counts = this.getCounts(applications);
-    const header = this.getPlural(applicationField).replace(/\b\w/g, l => l.toUpperCase());
+    const header = this.getPlural(displayName || applicationField).replace(/\b\w/g, l => l.toUpperCase());
 
     return (
       <Card className="cardStyle">
@@ -113,8 +118,8 @@ class CountCard extends Component {
               <ListItem>
                 <ListItemText
                   secondary={counts.length - 4 === 1
-                    ? `and 1 more ${applicationField}...`
-                    : `and ${counts.length - 4} more ${this.getPlural(applicationField)}...`
+                    ? `and 1 more ${displayName || applicationField}...`
+                    : `and ${counts.length - 4} more ${this.getPlural(displayName || applicationField)}...`
                   }
                 />
               </ListItem>
@@ -162,10 +167,12 @@ CountCard.propTypes = {
   applications: PropTypes.arrayOf(PropTypes.shape({})),
   applicationField: PropTypes.string.isRequired,
   classes: PropTypes.shape().isRequired,
+  displayName: PropTypes.string,
 };
 
 CountCard.defaultProps = {
   applications: [],
+  displayName: null,
 };
 
 function mapStateToProps(state) {
