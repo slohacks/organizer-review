@@ -82,6 +82,20 @@ export const fetchApplicants = () => (dispatch) => {
   });
 };
 
+export const updateRows = (rowNumber) => {
+  return {
+    type: types.UPDATE_QUERY_ROW,
+    queryRow: rowNumber,
+  };
+};
+
+export const updatePage = (pageNumber) => {
+  return {
+    type: types.UPDATE_QUERY_PAGE,
+    queryPage: pageNumber,
+  };
+};
+
 export const updateQuerySearch = (searchString) => {
   return {
     type: types.UPDATE_QUERY_STRING,
