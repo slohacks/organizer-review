@@ -14,12 +14,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import Tooltip from '@material-ui/core/Tooltip';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import requireAuth from '../components/requireAuth';
 import {
   fetchApplications,
   getResume,
   updateAppStatus,
   clearApplication,
+  signout,
 } from '../actions/index';
 import './Application.css';
 
@@ -58,6 +61,7 @@ class Application extends Component {
     this.waitlistApp = this.waitlistApp.bind(this);
     this.rejectApp = this.rejectApp.bind(this);
     this.handleBackButton = this.handleBackButton.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -93,6 +97,11 @@ class Application extends Component {
   handleBackButton() {
     const { history: { push } } = this.props;
     push('/applications/');
+  }
+
+  handleSignOut() {
+    const { signout: signoutActionCreator } = this.props;
+    signoutActionCreator();
   }
 
   render() {
@@ -141,6 +150,14 @@ class Application extends Component {
               <Typography variant="h6" color="inherit" component="h1" className="grow">
                 {appData.name}
               </Typography>
+              <Tooltip title="Sign Out">
+                <IconButton
+                  onClick={this.handleSignOut}
+                  color="inherit"
+                >
+                  <ExitToApp />
+                </IconButton>
+              </Tooltip>
             </Toolbar>
           </AppBar>
           <div className="sides">
@@ -422,6 +439,7 @@ Application.propTypes = {
   clearApplication: PropTypes.func.isRequired,
   getResume: PropTypes.func.isRequired,
   updateAppStatus: PropTypes.func.isRequired,
+  signout: PropTypes.func.isRequired,
   appData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   appStatus: PropTypes.number,
   resumeMetadata: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -452,5 +470,6 @@ export default connect(
     getResume,
     updateAppStatus,
     clearApplication,
+    signout,
   },
 )(requireAuth(Application));

@@ -23,6 +23,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import List from '@material-ui/icons/List';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import EnhancedTableHead from './EnhancedTableHead';
 import requireAuth from '../components/requireAuth';
 import {
@@ -30,6 +31,7 @@ import {
   updateQuerySearch,
   updateQueryButton,
   updateQueryCheck,
+  signout,
 } from '../actions/index';
 import './ListApplications.css';
 
@@ -213,6 +215,11 @@ class ListApplications extends Component {
       const { history: { push } } = this.props;
       push(`/${event.currentTarget.getAttribute('value')}/`);
       this.handleNavClose();
+    }
+
+    handleSignOut = () => {
+      const { signout: signoutActionCreator } = this.props;
+      signoutActionCreator();
     }
 
     queryCheckedTrue() {
@@ -401,6 +408,14 @@ class ListApplications extends Component {
                 {queryCheckedBool
                   ? matchIconButton(this.queryCheckedFalse)
                   : notMatchIconButton(this.queryCheckedTrue)}
+                <Tooltip title="Sign Out">
+                  <IconButton
+                    onClick={this.handleSignOut}
+                    color="inherit"
+                  >
+                    <ExitToApp />
+                  </IconButton>
+                </Tooltip>
               </Toolbar>
             </AppBar>
             <div className="sidesTable">
@@ -461,6 +476,7 @@ class ListApplications extends Component {
 
 ListApplications.propTypes = {
   fetchApplicants: PropTypes.func.isRequired,
+  signout: PropTypes.func.isRequired,
   applications: PropTypes.arrayOf(PropTypes.shape({})),
   history: PropTypes.shape().isRequired,
   classes: PropTypes.shape().isRequired,
@@ -496,4 +512,5 @@ connect(mapStateToProps,
     updateQuerySearch,
     updateQueryButton,
     updateQueryCheck,
+    signout,
   })(requireAuth((withStyles(styles)(ListApplications))));
