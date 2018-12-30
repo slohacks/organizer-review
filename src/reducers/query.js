@@ -4,6 +4,8 @@ const INITIAL_STATE = {
   querySearch: '',
   queryColumn: 'name',
   queryChecked: true,
+  queryRowNumber: 4,
+  queryPageNumber: 0,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -22,6 +24,16 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         queryChecked: action.queryCheckBox,
+      };
+    case types.UPDATE_QUERY_PAGE:
+      return {
+        ...state,
+        queryPageNumber: action.queryPage,
+      };
+    case types.UPDATE_QUERY_ROW:
+      return {
+        ...state,
+        queryRowNumber: action.queryRow,
       };
     default:
       return state;

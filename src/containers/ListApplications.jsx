@@ -31,6 +31,8 @@ import {
   updateQuerySearch,
   updateQueryButton,
   updateQueryCheck,
+  updateRows,
+  updatePage,
   signout,
 } from '../actions/index';
 import './ListApplications.css';
@@ -152,8 +154,6 @@ class ListApplications extends Component {
     this.state = {
       order: 'asc',
       orderBy: 'time',
-      page: 0,
-      rowsPerPage: 4,
       menuAnchorEl: null,
       navAnchorEl: null,
     };
@@ -182,11 +182,13 @@ class ListApplications extends Component {
   };
 
     handleChangePage = (event, page) => {
-      this.setState({ page });
+      const { updatePage: queryPage } = this.props;
+      queryPage(page);
     };
 
     handleChangeRowsPerPage = (event) => {
-      this.setState({ rowsPerPage: event.target.value });
+      const { updateRows: queryRow } = this.props;
+      queryRow(event.target.value);
     };
 
     handleMenu = (event) => {
@@ -233,12 +235,10 @@ class ListApplications extends Component {
     }
 
     renderApplications(filteredApps) {
-      const { history: { push }, classes } = this.props;
+      const { history: { push }, classes, rowsPerPage, page } = this.props;
       const {
         order,
         orderBy,
-        rowsPerPage,
-        page,
       } = this.state;
       return stableSort(filteredApps, getSorting(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -269,12 +269,12 @@ class ListApplications extends Component {
         querySearchString,
         queryColumnString,
         queryCheckedBool,
+        rowsPerPage,
+        page,
       } = this.props;
       const {
         order,
         orderBy,
-        rowsPerPage,
-        page,
         menuAnchorEl,
         navAnchorEl,
       } = this.state;
@@ -502,6 +502,8 @@ function mapStateToProps(state) {
     querySearchString: state.queryValues.querySearch,
     queryColumnString: state.queryValues.queryColumn,
     queryCheckedBool: state.queryValues.queryChecked,
+    rowsPerPage: state.queryValues.queryRowNumber,
+    page: state.queryValues.queryPageNumber,
   };
 }
 
@@ -512,5 +514,7 @@ connect(mapStateToProps,
     updateQuerySearch,
     updateQueryButton,
     updateQueryCheck,
+    updatePage,
+    updateRows,
     signout,
   })(requireAuth((withStyles(styles)(ListApplications))));
