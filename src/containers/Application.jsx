@@ -130,7 +130,7 @@ class Application extends Component {
       );
     }
 
-    if (appData && !errorResume) {
+    if (appData) {
       return (
         <div>
           <AppBar position="static">
@@ -226,31 +226,37 @@ class Application extends Component {
                 <Card className="cardStyle">
                   <CardContent>
                     <h3 className="cardTitle">Resume</h3>
-                    <List>
-                      <ListItem>
-                        <ListItemText primary="Name" secondary={appData.resume || 'N/A'} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText
-                          primary="Size"
-                          secondary={resumeMetadata && resumeMetadata.size
-                            ? `${(parseInt(resumeMetadata.size, 10) / 1024 / 1024).toFixed(2)} mb`
-                            : 'N/A'}
-                        />
-                      </ListItem>
-                    </List>
+                    {errorResume
+                      ? <p>{errorResumeMessage}</p>
+                      : (
+                        <List>
+                          <ListItem>
+                            <ListItemText primary="Name" secondary={appData.resume || 'N/A'} />
+                          </ListItem>
+                          <ListItem>
+                            <ListItemText
+                              primary="Size"
+                              secondary={resumeMetadata && resumeMetadata.size
+                                ? `${(parseInt(resumeMetadata.size, 10) / 1024 / 1024).toFixed(2)} mb`
+                                : 'N/A'}
+                            />
+                          </ListItem>
+                        </List>
+                      )}
                   </CardContent>
                   <CardActions>
-                    <Button
-                      size="small"
-                      disabled={!resumeMetadata}
-                      component="a"
-                      href={resumeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Download
-                    </Button>
+                    {!errorResume && (
+                      <Button
+                        size="small"
+                        disabled={!resumeMetadata}
+                        component="a"
+                        href={resumeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Download
+                      </Button>
+                    )}
                   </CardActions>
                 </Card>
                 <Card className="cardStyle">
@@ -394,9 +400,6 @@ class Application extends Component {
         <div className="sides">
           {appData
             ? <p>Application not found.</p>
-            : ''}
-          {errorResume
-            ? <p>{errorResumeMessage}</p>
             : ''}
         </div>
       </div>
