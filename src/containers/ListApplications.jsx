@@ -235,7 +235,12 @@ class ListApplications extends Component {
     }
 
     renderApplications(filteredApps) {
-      const { history: { push }, classes, rowsPerPage, page } = this.props;
+      const {
+        history: { push },
+        classes,
+        rowsPerPage,
+        page,
+      } = this.props;
       const {
         order,
         orderBy,
@@ -488,6 +493,10 @@ ListApplications.propTypes = {
   updateQuerySearch: PropTypes.func.isRequired,
   updateQueryButton: PropTypes.func.isRequired,
   updateQueryCheck: PropTypes.func.isRequired,
+  updatePage: PropTypes.func.isRequired,
+  updateRows: PropTypes.func.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
 };
 
 ListApplications.defaultProps = {
