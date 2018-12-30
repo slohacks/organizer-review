@@ -108,7 +108,10 @@ class Statistics extends Component {
               <CountCard applicationField="major" />
               <CountCard applicationField="ethnicity" />
               <CountCard applicationField="gender" />
-              <CountCard applicationField="diet" />
+              <CountCard
+                displayName="dietary preference"
+                applicationField="diet"
+              />
               <CountCard
                 displayName="allergy"
                 applicationField="allergies"
