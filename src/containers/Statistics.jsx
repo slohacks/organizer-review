@@ -91,6 +91,7 @@ class Statistics extends Component {
               <CountCard applicationField="major" />
               <CountCard applicationField="ethnicity" />
               <CountCard applicationField="gender" />
+              <CountCard applicationField="diet" />
             </div>
           </section>
         </div>
