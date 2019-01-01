@@ -74,7 +74,9 @@ class CountCard extends Component {
     let csvContent = 'data:text/csv;charset=utf-8,Status,Count\r\n';
 
     counts.forEach((count) => {
-      csvContent += `${count[applicationField].replace(/,/g, '-').trim()},${count.count}\r\n`;
+      if (count[applicationField] !== undefined) {
+        csvContent += `${count[applicationField].replace(/,/g, '-').trim()},${count.count}\r\n`;
+      }
     });
 
     csvContent = encodeURI(csvContent);
