@@ -160,6 +160,9 @@ class Application extends Component {
                     <h3 className="cardTitle">Demographics</h3>
                     <List>
                       <ListItem>
+                        <ListItemText primary="Major" secondary={handleUndefinedField(appData.major)} />
+                      </ListItem>
+                      <ListItem>
                         <ListItemText primary="Graduation Date" secondary={parseGradDate(appData.grad_date)} />
                       </ListItem>
                       <ListItem>
