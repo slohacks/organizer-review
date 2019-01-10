@@ -6,6 +6,7 @@ import forgotPassword from './forgotPassword';
 import application from './application';
 import applications from './applicants';
 import query from './query';
+import rsvp from './rsvp';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   app: application,
   apps: applications,
   queryValues: query,
+  rsvp,
 });
 
 export default rootReducer;
