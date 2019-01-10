@@ -1,5 +1,9 @@
 import * as types from './types';
-import { firebase, applicationsRef } from '../config/firebase';
+import {
+  firebase,
+  applicationsRef,
+  rsvpRef,
+} from '../config/firebase';
 
 export const signUp = (values, callback) => (dispatch) => {
   dispatch({ type: types.SIGN_UP_ATTEMPT });
@@ -79,6 +83,25 @@ export const fetchApplicants = () => (dispatch) => {
     }
   }, (error) => {
     dispatch({ type: types.FETCH_APPLICANTS_FAIL, error });
+  });
+};
+
+export const fetchRSVP = () => (dispatch) => {
+  dispatch({ type: types.FETCH_ATTEMPT });
+  let rsvps = [];
+  rsvpRef.onSnapshot((snapshot) => {
+    if (snapshot) {
+      rsvps = [];
+      snapshot.forEach(doc => rsvps.push({ ...doc.data(), uid: doc.id }));
+      dispatch({ type: types.FETCH_RSVP_SUCCESS, data: rsvps });
+    } else {
+      dispatch({
+        type: types.FETCH_RSVP_FAIL,
+        error: { message: 'Error fetching data.' },
+      });
+    }
+  }, (error) => {
+    dispatch({ type: types.FETCH_RSVP_FAIL, error });
   });
 };
 
