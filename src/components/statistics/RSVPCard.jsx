@@ -50,11 +50,11 @@ class RSVPCard extends Component {
       3: 'XL',
       4: 'XXL',
     };
-    let csvContent = 'data:text/csv;charset=utf-8,UID,Email,First Name,Last Name,Attending,California,Bus,Stop,Flight,Shirt,Misc\r\n';
+    let csvContent = 'data:text/csv;charset=utf-8,UID,Email,First Name,Last Name,College,Major,Attending,California,Bus,Stop,Flight,Shirt,Diet,Allergies,Misc\r\n';
 
     rsvps.forEach((rsvp) => {
       const application = applications.find(el => el.uid === rsvp.uid);
-      csvContent += `${rsvp.uid},${application.email},${application.name.split(' ')[0]},${application.name.split(' ')[1] || ''},${attendingEnum[rsvp.attending]},${caliEnum[rsvp.transportation]},${rsvp.buses || ''},"${rsvp.norcal || rsvp.socal || ''}","${rsvp.flight || ''}",${shirtEnum[rsvp.shirt]},"${rsvp.misc || ''}"\r\n`;
+      csvContent += `${rsvp.uid},${application.email},${application.name.split(' ')[0]},${application.name.split(' ')[1] || ''},"${application.college}","${application.major}",${attendingEnum[rsvp.attending]},${caliEnum[rsvp.transportation]},${rsvp.buses || ''},"${rsvp.norcal || rsvp.socal || ''}","${rsvp.flight || ''}",${shirtEnum[rsvp.shirt]},"${application.diet}","${application.allergies}","${rsvp.misc || ''}"\r\n`;
     });
 
     csvContent = encodeURI(csvContent);
